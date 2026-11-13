@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<link rel="manifest" href="manifest.json"><meta name="theme-color" content="#06323F"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="DeTouch مسح"><link rel="apple-touch-icon" href="icon-192.png">
+<link rel="manifest" href="manifest.json"><meta name="theme-color" content="#06323F"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="DeTouch مسح"><link rel="apple-touch-icon" href="apple-touch-icon.png">
 <base target="_top">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -171,6 +171,8 @@ input.big{font-size:22px;font-weight:700;text-align:center;letter-spacing:.5px}
 
 .otherb{background:#FFF8E1;border:1px solid #f0dca0;border-radius:12px;padding:2px 10px 10px;margin-top:10px}
 
+.lockn{background:#FFF4E5;border:1px solid #F0C27B;color:#8A4B00;border-radius:10px;padding:9px 12px;margin:8px 0;font-size:13.5px;font-weight:600;line-height:1.7}.lockn small{font-weight:400;color:#8A5A20}
+
 .sync{position:sticky;top:0;z-index:9;text-align:center;font-size:13px;font-weight:700;padding:7px 10px;cursor:pointer;color:#fff;background:#1F8A4C}
 .sync.off{background:#6B7A83}.sync.wait{background:#B7791F}.sync.busy{background:#2B7FA8}.sync.bad{background:#C0392B}.sync:empty{display:none}
 #vLogin{background:linear-gradient(160deg,#06323F,#0B4A5C)}#vLogin .login{margin:24px 14px}#vLogin .login .logo img{display:inline-block}
@@ -194,7 +196,7 @@ input.big{font-size:22px;font-weight:700;text-align:center;letter-spacing:.5px}
     <label>كلمة المرور</label><input id="lp" type="password" autocomplete="current-password">
     <div style="height:14px"></div>
     <button class="btn p full" onclick="doLogin()">دخول</button>
-    <p class="muted" id="lerr" style="color:var(--bad);text-align:center"></p><div class="ver">تطبيق المسح الميداني · الإصدار 1.0 (بدون إنترنت)</div>
+    <p class="muted" id="lerr" style="color:var(--bad);text-align:center"></p><div class="ver">تطبيق المسح الميداني · الإصدار 1.1 (بدون إنترنت)</div>
   </div>
 </div>
 
@@ -331,7 +333,7 @@ input.big{font-size:22px;font-weight:700;text-align:center;letter-spacing:.5px}
     <div style="height:14px"></div>
     <div class="bar"><button class="btn p" style="flex:1" onclick="saveCheck()">💾 حفظ</button><button class="btn g" onclick="closePoint()">إلغاء</button></div>
   </div>
-  <div id="ptBox">
+  <div id="ptBox"><div id="ptLockN"></div>
   <label>الطابق / المنطقة *</label><input id="pt_area" placeholder="اضغط اختيار سريع أو اكتب"><div class="qk" data-f="pt_area" data-m="set"></div>
   <div class="seg" id="seg_io"><span data-v="داخلي">🏠 داخلي</span><span data-v="خارجي">🌤 خارجي</span></div><input type="hidden" id="pt_io">
   <label>الموقع بالتحديد *</label><input id="pt_loc" placeholder="مثال: صالة العملاء – الركن الشمالي"><div class="qk" data-f="pt_loc" data-m="add"></div>
@@ -401,7 +403,7 @@ var L = {
   putRec: function (id, r) { return DB.set('v:' + id, r); },
   upsertList: function (item) { return L.list().then(function (l) { var i = l.findIndex(function (x) { return x.id === item.id; }); if (i >= 0) l[i] = Object.assign(l[i], item); else l.unshift(item); return DB.set('list', l); }); }
 };
-var VKEYS = ['id','date','tech','client','phone','address','city','gps','systems','building','floors','purpose','status','needsText','budget','ctrl','power','internet','notes','quote','createdBy','updated','report','ref'];
+var VKEYS = ['id','date','tech','client','phone','address','city','gps','systems','building','floors','purpose','status','needsText','budget','ctrl','power','internet','notes','quote','createdBy','updated','report','ref','created'];
 function vArr(d, old) { return VKEYS.map(function (k, i) { var x = d[k]; if (k === 'updated') return now_(); if ((x === undefined || x === null) && old) return old[i] || ''; return x === undefined || x === null ? '' : x; }); }
 function listItem(v, pts) { return {id: v[0], date: v[1], tech: v[2], client: v[3], city: v[6], systems: v[8], purpose: v[11], status: v[12], ref: v[23], points: pts, local: String(v[0]).indexOf('L-') === 0}; }
 function pending(id) { return L.q().then(function (q) { return q.some(function (o) { return o.vid === id; }); }); }
@@ -439,7 +441,7 @@ var LOCAL = {
     d = JSON.parse(JSON.stringify(d));
     return L.sess().then(function (s) {
       var isNew = !d.id;
-      if (isNew) { d.id = 'L-' + uid(); d.tech = d.tech || s.user.name; d.date = d.date || today_(); d.status = d.status || 'جديدة'; d.createdBy = s.user.user; }
+      if (isNew) { d.id = 'L-' + uid(); d.tech = d.tech || s.user.name; d.date = d.date || today_(); d.status = d.status || 'جديدة'; d.createdBy = s.user.user; d.created = ktNow(); }
       return L.rec(d.id).then(function (r) {
         r = r || {v: [], points: [], needs: [], details: {}, refPoints: []};
         r.v = vArr(d, r.v.length ? r.v : null);
@@ -465,8 +467,8 @@ var LOCAL = {
       if (!p.no) p.no = r.points.reduce(function (m, x) { return Math.max(m, +x.no || 0); }, 0) + 1;
       var ph = p.photoData, save = Promise.resolve();
       if (ph) { save = DB.set('ph:' + id + ':' + p.no, ph); }
-      var rec = Object.assign({}, p, {photo: ph ? 'local:' + p.no : p.photo, by: s.user.name}); delete rec.photoData;
-      var i = r.points.findIndex(function (x) { return String(x.no) === String(p.no); }); if (i >= 0) r.points[i] = rec; else r.points.push(rec);
+      var i = r.points.findIndex(function (x) { return String(x.no) === String(p.no); }), was = i >= 0 ? r.points[i] : null;
+      var rec = Object.assign({}, p, {photo: ph ? 'local:' + p.no : p.photo, by: was && was.by || s.user.name, t: was && was.t || ktNow()}); delete rec.photoData; if (i >= 0) r.points[i] = rec; else r.points.push(rec);
       return save.then(function () { return L.putRec(id, r); }).then(function () { return L.upsertList({id: id, points: r.points.length}); })
         .then(function () { return L.enqueue({fn: 'savePoint', vid: id, pno: p.no, args: ['@T', id, p]}); }).then(function () { return p.no; });
     });
@@ -492,11 +494,23 @@ var LOCAL = {
     if (obj.picData) { jobs.push(DB.set('ph:' + id + ':sign:pic', obj.picData)); obj.pic = 'local:sign:pic'; delete obj.picData; }
     return Promise.all(jobs).then(function () { return L.rec(id); }).then(function (r) {
       r = r || {v: [], points: [], needs: [], details: {}, refPoints: []}; r.details = r.details || {}; r.details[key] = obj;
+      r.dmeta = r.dmeta || {}; var m0 = r.dmeta[key]; r.dmeta[key] = {by: m0 && m0.by || (S.user && S.user.name) || '', t: m0 && key !== 'day' ? m0.t : ktNow()};
       return L.putRec(id, r);
     }).then(function () { return L.q(); }).then(function (q) {
       q = q.filter(function (o) { return !(o.fn === 'saveDetail' && o.vid === id && o.key === key && !o.sent); });
       return DB.set('q', q);
     }).then(function () { return L.enqueue({fn: 'saveDetail', vid: id, key: key, args: ['@T', id, key, send, hasNew ? photoData : '']}); }).then(function () { return obj; });
+  },
+  deleteVisit: function (token, id) {
+    if (!online()) return Promise.reject(new Error('حذف الزيارة يحتاج إنترنت'));
+    var sid = SYNC.map[id] || id, local = String(sid).indexOf('L-') === 0;
+    return (local ? Promise.resolve(true) : remote('deleteVisit', [token, sid])).then(function () {
+      return L.list().then(function (l) { return DB.set('list', l.filter(function (x) { return x.id !== id && x.id !== sid; })); })
+        .then(function () { return DB.del('v:' + id); }).then(function () { return DB.keys(); })
+        .then(function (ks) { return Promise.all(ks.filter(function (k) { return String(k).indexOf('ph:' + id + ':') === 0; }).map(function (k) { return DB.del(k); })); })
+        .then(function () { return L.q(); }).then(function (q) { return DB.set('q', q.filter(function (o) { return o.vid !== id && o.vid !== sid; })); })
+        .then(function () { SYNC.ui(); return true; });
+    });
   },
   getPhoto: function (token, id, no) {
     return DB.get('ph:' + id + ':' + no).then(function (d) {
@@ -768,7 +782,7 @@ function applySug(){var s=S.sug;if(!s)return;$('pt_mp').value=s.mp;$('pt_lens').
 function $(i){return document.getElementById(i)}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function toast(t){var e=$('toast');e.textContent=t;e.style.display='block';clearTimeout(e._t);e._t=setTimeout(function(){e.style.display='none'},2600)}
-var APPV='4.2';
+var APPV='4.3';
 function show(v){if(v!=='vLogin'&&!S.token){v='vLogin'}['vLogin','vList','vVisit'].forEach(function(x){$(x).style.display=x===v?(x==='vLogin'?'flex':'block'):'none'});window.scrollTo(0,0)}
 function api(fn,args,ok){
   $('load').style.display='flex';
@@ -776,6 +790,16 @@ function api(fn,args,ok){
     .withFailureHandler(function(e){$('load').style.display='none';var m=(e&&e.message)||String(e);toast('خطأ: '+m);if(typeof pvErr==='function')pvErr(m);if(m.indexOf('الجلسة')>=0)logout()});
   r[fn].apply(r,args);
 }
+/* ---------- edit/delete lock: delete = admin; edit = admin, or own record while open and < 24h old ---------- */
+function isAdm(){return !!(S.user&&S.user.role==='مدير')}
+function tsOf(s){var m=String(s||'').match(/^(\d{4})-(\d{1,2})-(\d{1,2})(?:[ T](\d{1,2}):(\d{2}))?/);if(!m)return 0;return Date.UTC(+m[1],+m[2]-1,+m[3],(+(m[4]||0))-2,+(m[5]||0))}
+function ktNow(){return new Date(Date.now()+72e5).toISOString().slice(0,16).replace('T',' ')}
+function lockWhy(by,created,open){var u=S.user||{};if(u.role==='مدير')return '';
+  if(open===false)return '🔒 هذا السجل مغلق – التعديل من حساب المدير فقط';
+  by=String(by||'').trim();if(by&&by!==u.name&&by!==u.user)return '🔒 هذا السجل أنشأه '+by+' – التعديل من حساب المدير فقط';
+  var t=tsOf(created);if(!t||Date.now()-t>864e5)return '🔒 مضى أكثر من 24 ساعة على إنشاء هذا السجل – التعديل من حساب المدير فقط';return ''}
+function lockForm(w){if(!w)return;$('fmSave').style.display='none';$('fmBody').insertAdjacentHTML('afterbegin','<div class="lockn">'+w+'</div>')}
+function lockNote(id,w){var e=$(id);if(!e){return}e.innerHTML=w?'<div class="lockn">'+w+'</div>':''}
 function T(){for(var i=0;i<TYPES.length;i++)if(TYPES[i].k===S.type)return TYPES[i];return TYPES[0]}
 function typeOf(p){p=p||'';for(var i=0;i<TYPES.length;i++)if(p.indexOf(TYPES[i].k)===0||p===TYPES[i].p)return TYPES[i].k;return 'مسح'}
 /* ---------- auth ---------- */
@@ -786,7 +810,7 @@ function doLogin(){
     $('hdr').style.display='flex';$('who').textContent=r.user.name+' · '+r.user.role;afterLogin();
   });
 }
-function logout(){if(window.__q&&__q>0&&!confirm('يوجد '+__q+' عنصر لم يُرفع بعد. ستبقى محفوظة في الهاتف وتُرفع بعد الدخول. تسجيل الخروج؟'))return;if(S.token){try{google.script.run.logoutToken(S.token)}catch(e){}}S.token=null;S.user=null;try{closeForm();pvClose()}catch(e){}try{localStorage.removeItem('dt')}catch(e){}$('hdr').style.display='none';$('nav').style.display='none';$('lp').value='';show('vLogin')}
+function logout(){if(!arguments[0]&&window.__q&&__q>0&&!confirm('يوجد '+__q+' عنصر لم يُرفع بعد. ستبقى محفوظة في الهاتف وتُرفع بعد الدخول. تسجيل الخروج؟'))return;if(S.token){try{google.script.run.logoutToken(S.token)}catch(e){}}S.token=null;S.user=null;try{closeForm();pvClose()}catch(e){}try{localStorage.removeItem('dt')}catch(e){}$('hdr').style.display='none';$('nav').style.display='none';$('lp').value='';show('vLogin')}
 /* ---------- list ---------- */
 function home(){api('listVisits',[S.token],function(r){S.visits=r;renderList();show('vList')})}
 function renderList(){
@@ -833,29 +857,38 @@ function sysChips(sel){$('sysChips').innerHTML=SYS.map(function(s){return '<span
 function sysTxt(){$('f_sysTxt').value=[].map.call(document.querySelectorAll('#sysChips .on'),function(e){return e.textContent}).join('، ')}
 function toggleSys(){var c=$('sysChips');c.style.display=c.style.display==='none'?'flex':'none'}
 function newVisit(){
-  S.cur={id:'',ref:''};S.points=[];S.refPoints=[];S.det={};F.forEach(function(k){$('f_'+k).value=''});
+  S.cur={id:'',ref:''};S.points=[];S.refPoints=[];S.det={};S.dmeta={};S.vLock='';S.vOpen=true;F.forEach(function(k){$('f_'+k).value=''});
   $('f_date').value=new Date().toISOString().slice(0,10);$('f_tech').value=S.user.name;
   sysChips(['كاميرات المراقبة']);$('vTitle').textContent='زيارة جديدة';$('vStatus').textContent='';$('needs').innerHTML='';$('rep').textContent='';
-  S.savedType=null;setType('مسح',false,true);renderPoints();show('vVisit');
+  S.savedType=null;setType('مسح',false,true);renderPoints();visLockUI();show('vVisit');
 }
 function openVisit(id){
   api('getVisit',[S.token,id],function(d){
-    var v=d.v;S.cur={id:v[0],ref:v[23]||''};S.points=d.points;S.refPoints=d.refPoints||[];S.det=d.details||{};
+    var v=d.v;S.cur={id:v[0],ref:v[23]||''};S.points=d.points;S.refPoints=d.refPoints||[];S.det=d.details||{};S.dmeta=d.dmeta||{};
+    S.vOpen=v[12]!=='مغلقة';S.vLock=lockWhy(v[20],v[24]||v[1],S.vOpen);
     F.forEach(function(k){$('f_'+k).value=v[COL[k]]||''});
     S.savedType=typeOf(v[11]);setType(S.savedType,false,true);$('f_status').value=v[12]||T().st[0];
     sysChips(String(v[8]||'').split('، '));renderPoints();renderNeeds(d.needs);
     $('vTitle').textContent=v[0]+' · '+(v[3]||'');$('vStatus').textContent=v[12];$('rep').innerHTML='';
-    show('vVisit');
+    visLockUI();show('vVisit');
   });
 }
 function collect(){
   var d={id:S.cur.id,ref:S.type==='مسح'?'':(S.cur.ref||'')};F.forEach(function(k){d[k]=$('f_'+k).value.trim()});
   d.systems=$('f_sysTxt').value;d.purpose=T().p;return d;
 }
+function visLockUI(){
+  var c=$('vTitle').parentNode,n=$('vLockN');if(!n){n=document.createElement('div');n.id='vLockN';c.appendChild(n)}
+  var b=$('vDel');if(!b){b=document.createElement('button');b.id='vDel';b.className='btn d';b.style.cssText='margin-top:8px;padding:7px 12px;font-size:13px';b.textContent='🗑 حذف الزيارة';b.onclick=delVisit;c.appendChild(b)}
+  n.innerHTML=S.vLock?'<div class="lockn">'+S.vLock+'<br><small>يمكنك إضافة نقاط وخطوات جديدة'+(S.vOpen?'':' (الزيارة مغلقة – للمدير فقط)')+'، وتعديل بيانات الزيارة من حساب المدير.</small></div>':'';
+  b.style.display=isAdm()&&S.cur&&S.cur.id?'':'none';
+  [].forEach.call(document.querySelectorAll('#p1 input,#p1 select,#p1 textarea'),function(e){e.disabled=!!S.vLock})}
+function delVisit(){if(!S.cur.id||!confirm('حذف الزيارة '+S.cur.id+' نهائياً مع كل نقاطها وصورها؟'))return;api('deleteVisit',[S.token,S.cur.id],function(){toast('تم حذف الزيارة');home()})}
 function saveVisit(cb){
+  if(S.cur.id&&S.vLock){if(typeof cb==='function')cb();else toast(S.vLock);return}
   var d=collect();if(!d.client){toast('اكتب اسم العميل أولاً');tab('p1');return}
   if(S.type!=='مسح'&&!d.ref&&S.type!=='صيانة'){toast('اختر المشروع (الزيارة المرجعية) أولاً');tab('p1');return}
-  api('saveVisit',[S.token,d],function(id){S.cur.id=id;S.savedType=S.type;$('vTitle').textContent=id+' · '+d.client;$('vStatus').textContent=d.status;toast(String(id).indexOf('L-')===0?'✅ حُفظت في الهاتف – تُرفع تلقائياً عند توفر الشبكة':'تم حفظ الزيارة '+id);if(typeof cb==='function')cb()});
+  api('saveVisit',[S.token,d],function(id){S.cur.id=id;S.savedType=S.type;$('vTitle').textContent=id+' · '+d.client;$('vStatus').textContent=d.status;toast(String(id).indexOf('L-')===0?'✅ حُفظت في الهاتف – تُرفع تلقائياً عند توفر الشبكة':'تم حفظ الزيارة '+id);visLockUI();if(typeof cb==='function')cb()});
 }
 function need(cb){if(S.cur.id)cb();else saveVisit(cb)}
 function tab(n){
@@ -887,7 +920,8 @@ function openPoint(i){
     if(DEVS.indexOf(dv)<0)dv=DEVS[0];$('pt_dev').value=dv;segSet('seg_io','pt_io',io);segSet('seg_tech','pt_tech',tech);segSet('seg_use','pt_use',use);segSet('seg_rng','pt_rng',rng);
     $('pt_mp').value=p&&p.mp||'4MP';$('pt_lens').value=p&&p.lens||'2.8mm';$('pt_night').value=p&&p.night||NIGHT[0];devChg();
     $('pt_file').value='';$('pt_prev').style.display='none';$('pt_link').innerHTML=p&&p.photo?'<a href="#" onclick="showPhoto(\''+p.no+'\',\'pt_prev\');return false">📷 عرض الصورة المحفوظة</a>':'';
-    $('ptDel').style.display=p?'inline-flex':'none';$('mPoint').style.display='flex';
+    S.ptLock=p?lockWhy(p.by,p.t,S.vOpen):(S.vOpen||isAdm()?'':'🔒 الزيارة مغلقة – الإضافة من حساب المدير فقط');lockNote('ptLockN',S.ptLock);
+    $('ptDel').style.display=p&&isAdm()?'inline-flex':'none';$('mPoint').style.display='flex';
   });
 }
 function showPhoto(no,el){api('getPhoto',[S.token,S.cur.id,no],function(d){if(d){$(el).src=d;$(el).style.display='block'}else toast('لا توجد صورة')})}
@@ -901,6 +935,7 @@ function pickPhoto(inp,el){
 var NOPH='📷 لا يمكن الحفظ بدون صورة – التقط صورة من الكاميرا';
 function oldPhLink(key,el,link){$(el+'').style.display='none';$(link).innerHTML=(S.det[key]||{}).photo?'<a href="#" onclick="showPhoto(\''+key+'\',\''+el+'\');return false">📷 عرض الصورة المحفوظة</a>':''}
 function savePoint(){
+  if(S.ptLock){toast(S.ptLock);return}
   var p={no:S.pt?S.pt.no:'',photo:S.pt?S.pt.photo:''};['area','loc','io','dev','dir','dist','h','notes','tech','mp','lens','night','use','rng'].forEach(function(k){p[k]=$('pt_'+k).value.trim()});
   if(!p.area||!p.loc){toast('اكتب المنطقة والموقع');return}
   if(S.photo.pt_prev)p.photoData=S.photo.pt_prev;
@@ -932,29 +967,31 @@ function openCheck(i){
     $('mPoint').style.display='flex';
   });
 }
+function detLock(key){var m=S.dmeta&&S.dmeta[key];if(!m)return S.vOpen||isAdm()?'':'🔒 الزيارة مغلقة – التعديل من حساب المدير فقط';return lockWhy(m.by,m.t,S.vOpen)}
+function detDone(key){S.dmeta=S.dmeta||{};if(!S.dmeta[key]||key==='day')S.dmeta[key]={by:(S.dmeta[key]||{}).by||S.user.name,t:key==='day'||!S.dmeta[key]?ktNow():S.dmeta[key].t}}
 function allChk(){CHK_PT.forEach(function(k,j){$('ck'+j).checked=true})}
 function renderStage(){$('ckStage').innerHTML='<label>مرحلة التنفيذ</label><div class="stg">'+STAGES.map(function(s){return '<span class="'+(s===S.stage?'on':'')+'" onclick="S.stage=\''+s+'\';renderStage()">'+s+'</span>'}).join('')+'</div>'}
 function saveCheck(){
-  var p=S.ck,key='pt:'+p.no,o={note:$('ck_note').value.trim(),photo:(S.det[key]||{}).photo||''};
+  var p=S.ck,key='pt:'+p.no,lw=detLock(key);if(lw){toast(lw);return}var o={note:$('ck_note').value.trim(),photo:(S.det[key]||{}).photo||''};
   if(!S.photo.ck_prev&&!o.photo){toast(NOPH);return}
   if(S.type==='متابعة')o.stage=S.stage;else{o.c={};CHK_PT.forEach(function(k,j){if($('ck'+j).checked)o.c[j]=1})}
-  api('saveDetail',[S.token,S.cur.id,key,o,S.photo.ck_prev||''],function(r){S.photo.ck_prev=null;S.det[key]=r;closePoint();renderRef();toast('تم الحفظ')});
+  api('saveDetail',[S.token,S.cur.id,key,o,S.photo.ck_prev||''],function(r){S.photo.ck_prev=null;S.det[key]=r;detDone(key);closePoint();renderRef();toast('تم الحفظ')});
 }
 /* ---------- handover system checks ---------- */
 function renderSys(){var x=S.det.sys||{},c=x.c||{};$('sysChk').innerHTML=CHK_SYS.map(function(k,j){return '<label class="chk"><input type="checkbox" id="sy'+j+'"'+(c[j]?' checked':'')+'>'+k+'</label>'}).join('');$('sys_note').value=x.note||'';S.photo.sy_prev=null;$('sy_file').value='';oldPhLink('sys','sy_prev','sy_link')}
-function saveSys(){need(function(){var o={c:{},note:$('sys_note').value.trim(),photo:(S.det.sys||{}).photo||''};if(!S.photo.sy_prev&&!o.photo){toast(NOPH);return}CHK_SYS.forEach(function(k,j){if($('sy'+j).checked)o.c[j]=1});api('saveDetail',[S.token,S.cur.id,'sys',o,S.photo.sy_prev||''],function(r){S.det.sys=r;S.photo.sy_prev=null;toast('تم حفظ فحص النظام')})})}
+function saveSys(){need(function(){var lw=detLock('sys');if(lw){toast(lw);return}var o={c:{},note:$('sys_note').value.trim(),photo:(S.det.sys||{}).photo||''};if(!S.photo.sy_prev&&!o.photo){toast(NOPH);return}CHK_SYS.forEach(function(k,j){if($('sy'+j).checked)o.c[j]=1});api('saveDetail',[S.token,S.cur.id,'sys',o,S.photo.sy_prev||''],function(r){S.det.sys=r;detDone('sys');S.photo.sy_prev=null;toast('تم حفظ فحص النظام')})})}
 /* ---------- follow-up day summary ---------- */
 function loadDay(){var x=S.det.day||{};['work','issues','materials','next'].forEach(function(k){$('dy_'+k).value=x[k]||''});S.photo.dy_prev=null;$('dy_file').value='';oldPhLink('day','dy_prev','dy_link')}
-function saveDay(){need(function(){var o={photo:(S.det.day||{}).photo||''};if(!S.photo.dy_prev&&!o.photo){toast(NOPH);return}['work','issues','materials','next'].forEach(function(k){o[k]=$('dy_'+k).value.trim()});api('saveDetail',[S.token,S.cur.id,'day',o,S.photo.dy_prev||''],function(r){S.det.day=r;S.photo.dy_prev=null;toast('تم حفظ ملخص اليوم')})})}
+function saveDay(){need(function(){var lw=detLock('day');if(lw){toast(lw);return}var o={photo:(S.det.day||{}).photo||''};if(!S.photo.dy_prev&&!o.photo){toast(NOPH);return}['work','issues','materials','next'].forEach(function(k){o[k]=$('dy_'+k).value.trim()});api('saveDetail',[S.token,S.cur.id,'day',o,S.photo.dy_prev||''],function(r){S.det.day=r;detDone('day');S.photo.dy_prev=null;toast('تم حفظ ملخص اليوم')})})}
 /* ---------- maintenance ---------- */
 function loadMaint(){var x=S.det.maint||{};['tin','tout','complaint','diagnosis','action','parts','result','warranty'].forEach(function(k){if(x[k]!=null)$('m_'+k).value=x[k];else if($('m_'+k).tagName!=='SELECT')$('m_'+k).value=''});
   var aff=x.affected||[];$('m_aff').innerHTML=S.refPoints.length?S.refPoints.map(function(p){var t=p.no+' – '+p.loc;return '<span class="chip'+(aff.indexOf(t)>=0?' on':'')+'" onclick="this.classList.toggle(\'on\')">'+esc(t)+'</span>'}).join(''):'<span class="muted">اختر المشروع في «البيانات» لعرض نقاطه، أو اكتب النقاط في البلاغ.</span>';
   $('m_file').value='';S.photo.m_prev=null;oldPhLink('maint','m_prev','m_link');if(!x.tin){var d=new Date();$('m_tin').value=('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)}}
-function saveMaint(){need(function(){var o={photo:(S.det.maint||{}).photo||''};['tin','tout','complaint','diagnosis','action','parts','result','warranty'].forEach(function(k){o[k]=$('m_'+k).value.trim()});
+function saveMaint(){need(function(){var lw=detLock('maint');if(lw){toast(lw);return}var o={photo:(S.det.maint||{}).photo||''};['tin','tout','complaint','diagnosis','action','parts','result','warranty'].forEach(function(k){o[k]=$('m_'+k).value.trim()});
   if(!o.complaint){toast('اكتب البلاغ / الشكوى');return}
   if(!S.photo.m_prev&&!o.photo){toast(NOPH);return}
   o.affected=[].map.call(document.querySelectorAll('#m_aff .on'),function(e){return e.textContent});
-  api('saveDetail',[S.token,S.cur.id,'maint',o,S.photo.m_prev||''],function(r){S.det.maint=r;S.photo.m_prev=null;toast('تم حفظ تفاصيل الصيانة')})})}
+  api('saveDetail',[S.token,S.cur.id,'maint',o,S.photo.m_prev||''],function(r){S.det.maint=r;detDone('maint');S.photo.m_prev=null;toast('تم حفظ تفاصيل الصيانة')})})}
 /* ---------- signature ---------- */
 var sigDirty=false;
 function initSig(){var c=$('sigPad'),r=c.getBoundingClientRect();c.width=r.width*2;c.height=r.height*2;var g=c.getContext('2d');g.scale(2,2);g.lineWidth=2.4;g.lineCap='round';g.strokeStyle='#0B2A6B';
@@ -966,13 +1003,13 @@ function clearSig(){var c=$('sigPad');c.getContext('2d').clearRect(0,0,c.width,c
 function loadSign(){var x=S.det.sign||{};['name','title','phone','note'].forEach(function(k){$('sg_'+k).value=x[k]||''});if(x.result)$('sg_result').value=x.result;
   initSig();clearSig();S.photo.sg_prev=null;$('sg_file').value='';$('sg_prev').style.display='none';$('sg_link').innerHTML=x.pic?'<a href="#" onclick="showPhoto(\'sign:pic\',\'sg_prev\');return false">📷 عرض الصورة المحفوظة</a>':'';$('sigOld').innerHTML=x.photo?'<a href="#" onclick="showSig();return false">عرض التوقيع المحفوظ</a>':''}
 function showSig(){api('getPhoto',[S.token,S.cur.id,'sign'],function(d){if(!d)return;var im=new Image();im.onload=function(){var c=$('sigPad'),r=c.getBoundingClientRect();c.getContext('2d').drawImage(im,0,0,r.width,r.height)};im.src=d})}
-function saveSign(){need(function(){var o={photo:(S.det.sign||{}).photo||''};['name','title','phone','note','result'].forEach(function(k){o[k]=$('sg_'+k).value.trim()});
+function saveSign(){need(function(){var lw=detLock('sign');if(lw){toast(lw);return}var o={photo:(S.det.sign||{}).photo||''};['name','title','phone','note','result'].forEach(function(k){o[k]=$('sg_'+k).value.trim()});
   if(!o.name){toast('اكتب اسم مندوب العميل');return}
   var data=sigDirty?$('sigPad').toDataURL('image/png'):'';
   if(!data&&!o.photo){toast('✍ اطلب من العميل التوقيع أولاً');return}
   o.pic=(S.det.sign||{}).pic||'';if(!S.photo.sg_prev&&!o.pic){toast(NOPH);return}
   if(S.photo.sg_prev)o.picData=S.photo.sg_prev;
-  api('saveDetail',[S.token,S.cur.id,'sign',o,data],function(r){S.det.sign=r;sigDirty=false;S.photo.sg_prev=null;toast('تم حفظ الاعتماد والتوقيع')})})}
+  api('saveDetail',[S.token,S.cur.id,'sign',o,data],function(r){S.det.sign=r;detDone('sign');sigDirty=false;S.photo.sg_prev=null;toast('تم حفظ الاعتماد والتوقيع')})})}
 /* ---------- report ---------- */
 function repPreview(){var w=previewWin();if(!w)return;saveVisit(function(){api('makeReport',[S.token,S.cur.id,true],function(r){showPreview(w,r.html)},function(){w.close()})})}
 function report(){saveVisit(function(){
@@ -991,9 +1028,16 @@ function printRep(){var w=window.open('','_blank');if(!w){toast('اسمح بال
 /* ---------- start ---------- */
 (function(){var r=null;try{r=JSON.parse(localStorage.getItem('dt')||'null')}catch(e){}
   show('vLogin');if(!r||!r.token)return;
+  var li=0;try{li=+(localStorage.getItem('dtIdle')||0)}catch(e){}if(li&&Date.now()-li>600000){try{localStorage.removeItem('dt')}catch(e){}$('lerr').textContent='تم تسجيل الخروج بعد 10 دقائق من عدم الاستخدام';return}
   google.script.run.withSuccessHandler(function(x){S.token=r.token;S.user=x.user;$('hdr').style.display='flex';$('who').textContent=x.user.name+' · '+x.user.role;afterLogin()})
     .withFailureHandler(function(){try{localStorage.removeItem('dt')}catch(e){}show('vLogin')}).whoami(r.token)})();
-
+/* auto logout after 10 minutes without activity (works offline; also on reopening the app) */
+var IDLE=0,IDLE_MS=600000;
+function idleTouch(){var n=Date.now();if(n-IDLE<5000)return;IDLE=n;try{localStorage.setItem('dtIdle',String(n))}catch(e){}}
+function idleCheck(){if(S.token&&IDLE&&Date.now()-IDLE>IDLE_MS){logout(true);$('lerr').textContent='تم تسجيل الخروج تلقائياً بعد 10 دقائق من عدم الاستخدام';toast('تم تسجيل الخروج تلقائياً بعد 10 دقائق من عدم الاستخدام')}}
+['click','keydown','touchstart','input','scroll'].forEach(function(ev){document.addEventListener(ev,idleTouch,true)});
+document.addEventListener('visibilitychange',function(){if(!document.hidden)idleCheck()});window.addEventListener('focus',idleCheck);
+setInterval(idleCheck,20000);idleTouch();
 $('lp').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin()});
 
 </script>
