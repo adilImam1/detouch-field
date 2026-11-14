@@ -375,6 +375,8 @@ html[dir=rtl] .sp-m b,html[dir=rtl] .lbcr small{text-align:right}
 body.dark .qc{background:#132A33;border-color:#2A4252}body.dark .qc.done{background:#173039;border-color:#1E6E86}body.dark .qc.neg{border-color:#7a3b33}
 body.dark .qopts span{background:#173039;border-color:#2A4252;color:#C9DCE4}body.dark .qopts span.on{background:#1E6E86;color:#fff}body.dark .qprog{background:#22394A}body.dark .qv{background:#22394A;color:#C9DCE4}
 
+.qc.miss{border-color:#E06B5C;background:#FFF6F4;box-shadow:0 0 0 3px rgba(224,107,92,.15)}.qc.miss .qv{background:#FDECEA;color:#B03A2E}body.dark .qc.miss{border-color:#C0392B;background:#2a1d1d}
+
 #updBar{position:fixed;bottom:calc(14px + env(safe-area-inset-bottom));right:12px;left:12px;z-index:70;display:none;align-items:center;justify-content:space-between;gap:10px;background:#06323F;color:#fff;border-radius:16px;padding:12px 14px;font-weight:700;font-size:14px;box-shadow:0 12px 30px rgba(0,0,0,.35)}#updBar button{border:0;background:#2BA3D6;color:#fff;border-radius:10px;padding:9px 14px;font-family:inherit;font-weight:800;font-size:14px}
 .sync{position:sticky;top:0;z-index:9;text-align:center;font-size:13px;font-weight:700;padding:7px 10px;cursor:pointer;color:#fff;background:#1F8A4C}
 .sync.off{background:#6B7A83}.sync.wait{background:#B7791F}.sync.busy{background:#2B7FA8}.sync.bad{background:#C0392B}.sync:empty{display:none}
@@ -414,7 +416,7 @@ body.dark .qopts span{background:#173039;border-color:#2A4252;color:#C9DCE4}body
     <label>كلمة المرور</label><div class="lin"><i>🔒</i><input id="lp" type="password" autocomplete="current-password"><i class="eyeb" onclick="var p=document.getElementById('lp');p.type=p.type==='password'?'text':'password'">👁</i></div>
     <div style="height:14px"></div>
     <button class="btn p full" onclick="doLogin()">دخول</button><button class="btn g full bio" id="bioBtn" style="display:none" onclick="bioLogin()"></button>
-    <p class="muted" id="lerr" style="color:var(--bad);text-align:center"></p><div class="ver">تطبيق المسح الميداني · الإصدار 2.0 (بدون إنترنت)</div>
+    <p class="muted" id="lerr" style="color:var(--bad);text-align:center"></p><div class="ver">تطبيق المسح الميداني · الإصدار 2.1 (بدون إنترنت)</div>
   </div>
 </div>
 
@@ -479,7 +481,7 @@ body.dark .qopts span{background:#173039;border-color:#2A4252;color:#C9DCE4}body
 
   <div id="p3" class="pane" style="display:none">
     <div class="card qcard"><h2>📋 استبيان العميل – البنود الاختيارية</h2>
-      <p class="muted">اسأل العميل أثناء الزيارة. «لا» تُلغي البند من الاحتياجات، وما لم تُجب عنه يُحسب حسب إعدادات الشركة.</p>
+      <p class="muted">اسأل العميل أثناء الزيارة – <b style="color:var(--bad)">كل الأسئلة إلزامية</b>. «لا» تُلغي البند من الاحتياجات، و«⚙ تلقائي» تطبّق إعدادات الشركة.</p>
       <div id="qList"></div><div id="qLockN"></div>
       <button class="btn p full" id="qSave" onclick="saveQ()">💾 حفظ الإجابات وحساب الاحتياجات</button>
     </div>
@@ -1138,6 +1140,8 @@ Object.assign(I18N,{"🖥 شاشة العرض – المقاس": "🖥 Monitor �
 Object.assign(I18N,{"الإصدار 1.9 (بدون إنترنت)": "Version 1.9 (offline)"});
 Object.assign(I18N,{"شاشة العرض": "Monitor", "المقاس المطلوب": "Required size", "جهاز التسجيل + الهارد": "Recorder + hard disk", "هل يحتاج جهازاً جديداً؟": "Does it need a new one?", "✓ جديد": "✓ New", "✕ يوجد جهاز": "✕ Has one", "مدة حفظ التسجيل": "Recording retention", "بالأيام – تحدد حجم الهارد": "In days – sets the disk size", "7 أيام": "7 days", "15 يوم": "15 days", "30 يوم": "30 days", "60 يوم": "60 days", "الكابينة (الراك)": "Rack cabinet", "الحجم المطلوب": "Required size", "حماية من انقطاع الكهرباء": "Power-cut protection", "طريقة تمديد الكيبل": "Cable routing", "مواسير أو ترانكات أو بدون": "Conduit, trunking or none", "الاثنان": "Both", "بدون": "None", "علب تركيب الكاميرات": "Camera mounting boxes", "داخلية وخارجية": "Indoor and outdoor", "حماية من الصواعق": "Surge protection", "للكاميرات الخارجية": "For outdoor cameras", "✓ نعم": "✓ Yes", "✕ لا": "✕ No", "⚙ تلقائي": "⚙ Auto", "تلقائي": "Auto", "تمت الإجابة": "Answered", "من": "of"});
 Object.assign(I18N,{"الإصدار 2.0 (بدون إنترنت)": "Version 2.0 (offline)"});
+Object.assign(I18N,{"اسأل العميل أثناء الزيارة –": "Ask the client during the visit –", "كل الأسئلة إلزامية": "all questions are required", "«لا» تُلغي البند من الاحتياجات، و«⚙ تلقائي» تطبّق إعدادات الشركة.": "“No” removes the item from the needs, and “⚙ Auto” applies the company settings.", "مطلوب": "Required", "📋 أكمل استبيان العميل:": "📋 Complete the client questionnaire:"});
+Object.assign(I18N,{"الإصدار 2.1 (بدون إنترنت)": "Version 2.1 (offline)"});
 
 
 var S={token:null,user:null,visits:[],cur:null,points:[],refPoints:[],det:{},pt:null,ck:null,photo:{},ftype:'الكل',type:'مسح'};
@@ -1199,7 +1203,7 @@ function applySug(){var s=S.sug;if(!s)return;$('pt_mp').value=s.mp;$('pt_lens').
 function $(i){return document.getElementById(i)}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function toast(t){var e=$('toast');e.textContent=t;e.style.display='block';clearTimeout(e._t);e._t=setTimeout(function(){e.style.display='none'},2600)}
-var APPV='5.4';
+var APPV='5.5';
 function show(v){NAVSEQ++;if(v!=='vLogin'&&!S.token){v='vLogin'}['vLogin','vList','vVisit','vDash','vClients','vProjects','vProject','vWork','vSales','vDoc','vFin','vLetter','vExp','vLabels','vSupport'].forEach(function(x){if($(x))$(x).style.display=x===v?(x==='vLogin'?'flex':'block'):'none'});window.scrollTo(0,0);if(typeof navOnShow==='function')navOnShow(v)}
 /* ---------- server calls: thin progress bar, overlay only if slow, read cache (stale-while-revalidate) ---------- */
 var NAVSEQ=0,DC={},BUSY=0,LOADN=0,LOADT=null;
@@ -1428,18 +1432,21 @@ var QS=[{k:'screen',i:'🖥',t:'شاشة العرض',h:'المقاس المطل�
  {k:'surge',i:'⚡',t:'حماية من الصواعق',h:'للكاميرات الخارجية',o:[['نعم','✓ نعم']],no:'لا'}];
 function qLabel(q,v){if(!v)return '';if(q.no&&v===q.no)return q.nol||'✕ لا';for(var i=0;i<q.o.length;i++)if(q.o[i][0]===v)return q.o[i][1];return v}
 function renderQ(){var a=(S.det&&S.det.q)||{};S.qa=JSON.parse(JSON.stringify(a));delete S.qa.photo;delete S.qa.at;
-  $('qList').innerHTML='<div class="qhd"><div class="qprog"><i id="qBar"></i></div><span id="qCnt"></span></div><div class="qgrid">'+QS.map(function(q){var opts=q.o.map(function(o){return '<span data-v="'+esc(o[0])+'">'+esc(o[1])+'</span>'}).join('')+(q.no?'<span class="qn" data-v="'+esc(q.no)+'">'+esc(q.nol||'✕ لا')+'</span>':'')+'<span class="qd" data-v="" title="حسب إعدادات الشركة">⚙ تلقائي</span>';
+  $('qList').innerHTML='<div class="qhd"><div class="qprog"><i id="qBar"></i></div><span id="qCnt"></span></div><div class="qgrid">'+QS.map(function(q){var opts=q.o.map(function(o){return '<span data-v="'+esc(o[0])+'">'+esc(o[1])+'</span>'}).join('')+(q.no?'<span class="qn" data-v="'+esc(q.no)+'">'+esc(q.nol||'✕ لا')+'</span>':'')+'<span class="qd" data-v="تلقائي" title="حسب إعدادات الشركة">⚙ تلقائي</span>';
     return '<div class="qc" id="qc_'+q.k+'"><div class="qt"><span class="qi">'+q.i+'</span><div class="qtt"><b>'+esc(q.t)+'</b><small>'+esc(q.h)+'</small></div><em class="qv" id="qv_'+q.k+'"></em></div><div class="qopts'+(q.o.length>3?' many':'')+'" data-k="'+q.k+'">'+opts+'</div></div>'}).join('')+'</div>';
-  [].forEach.call(document.querySelectorAll('#qList .qopts'),function(g){g.onclick=function(e){var t=e.target.closest('span');if(!t||S.qLock)return;var k=g.getAttribute('data-k'),v=t.getAttribute('data-v');if(v)S.qa[k]=v;else delete S.qa[k];qPaint()}});
+  [].forEach.call(document.querySelectorAll('#qList .qopts'),function(g){g.onclick=function(e){var t=e.target.closest('span');if(!t||S.qLock)return;var k=g.getAttribute('data-k'),v=t.getAttribute('data-v');S.qa[k]=v;$('qc_'+k).classList.remove('miss');qPaint()}});
   qPaint();
   var m=S.dmeta&&S.dmeta.q;S.qLock=m?lockWhy(m.by,m.t,S.vOpen):(S.vOpen||isAdm()?'':'🔒 الزيارة مغلقة – الإضافة من حساب المدير فقط');lockNote('qLockN',S.qLock);$('qSave').style.display=S.qLock?'none':''}
 function qPaint(){var n=0;QS.forEach(function(q){var v=S.qa[q.k]||'',g=document.querySelector('#qList .qopts[data-k="'+q.k+'"]');if(!g)return;if(v)n++;
   [].forEach.call(g.children,function(c){c.classList.toggle('on',c.getAttribute('data-v')===v)});
-  var c=$('qc_'+q.k);c.classList.toggle('done',!!v);c.classList.toggle('neg',!!(q.no&&v===q.no));$('qv_'+q.k).textContent=v?qLabel(q,v):'تلقائي'});
+  var c=$('qc_'+q.k);c.classList.toggle('done',!!v);c.classList.toggle('neg',!!(q.no&&v===q.no));$('qv_'+q.k).textContent=v?(v==='تلقائي'?'⚙ تلقائي':qLabel(q,v)):'مطلوب'});
   $('qBar').style.width=Math.round(n/QS.length*100)+'%';$('qCnt').textContent='تمت الإجابة '+n+' من '+QS.length}
-function saveQ(){if(S.qLock){toast(S.qLock);return}need(function(){var a=S.qa||{};a.at=ktNow();
+function qMiss(a){a=a||{};return QS.filter(function(q){return !a[q.k]})}
+function qCheck(a,show){var m=qMiss(a);if(!m.length)return true;if(show!==false){m.forEach(function(q){var c=$('qc_'+q.k);if(c)c.classList.add('miss')});var f=$('qc_'+m[0].k);if(f)f.scrollIntoView({block:'center',behavior:'smooth'});
+  toast('📋 أكمل استبيان العميل: '+m.map(function(q){return q.t}).join('، '))}return false}
+function saveQ(){if(S.qLock){toast(S.qLock);return}if(!qCheck(S.qa))return;need(function(){var a=S.qa||{};a.at=ktNow();
   api('saveDetail',[S.token,S.cur.id,'q',a,''],function(r){S.det.q=r;S.dmeta.q=S.dmeta.q||{by:S.user.name,t:ktNow()};toast('تم حفظ إجابات العميل');calc()})})}
-function calc(){need(function(){api('calcNeeds',[S.token,S.cur.id],function(L){renderNeeds(L);toast('تم حساب الاحتياجات')})})}
+function calc(){if(S.type==='مسح'&&!qCheck(S.det&&S.det.q)){if($('qList')&&$('p3').style.display==='none')tab('p3');return}need(function(){api('calcNeeds',[S.token,S.cur.id],function(L){renderNeeds(L);toast('تم حساب الاحتياجات')})})}
 /* ---------- follow-up / handover: per point ---------- */
 function ptScore(no){var x=S.det['pt:'+no]||{};
   if(S.type==='متابعة'){var i=STAGES.indexOf(x.stage||STAGES[0]);return {v:i/(STAGES.length-1),txt:x.stage||STAGES[0],cls:i===STAGES.length-1?'g':i>0?'y':'r'}}
