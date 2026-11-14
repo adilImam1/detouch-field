@@ -377,6 +377,26 @@ body.dark .qopts span{background:#173039;border-color:#2A4252;color:#C9DCE4}body
 
 .qc.miss{border-color:#E06B5C;background:#FFF6F4;box-shadow:0 0 0 3px rgba(224,107,92,.15)}.qc.miss .qv{background:#FDECEA;color:#B03A2E}body.dark .qc.miss{border-color:#C0392B;background:#2a1d1d}
 
+.pted{font-style:normal;font-size:11.5px;color:#B8860B}
+/* ===== v6: WhatsApp, VAT switch, stamp, admin tools, global search ===== */
+.btn.wa{background:linear-gradient(135deg,#25D366,#128C4A);color:#fff;border:0;box-shadow:0 6px 16px rgba(18,140,74,.25)}
+.samep{font-size:11.5px;font-weight:600;color:var(--a);margin-inline-start:6px;text-decoration:none}
+.vatsw{display:flex;gap:6px;background:#EEF3F6;border-radius:14px;padding:4px;margin-bottom:10px}.vatsw span{flex:1;text-align:center;padding:10px 6px;border-radius:11px;font-size:13.5px;font-weight:700;cursor:pointer;color:var(--mut)}
+.vatsw span.on{background:#fff;color:var(--n);box-shadow:0 2px 8px rgba(6,50,63,.12)}
+.stampc{padding:12px}.stok{background:#E8F7EF;color:#145C34;border:1px solid #9ED9B6;border-radius:12px;padding:10px;font-weight:700;margin-bottom:8px;text-align:center}.stno{background:#FFF8E6;color:#8A5A00;border:1px solid #F0D29B;border-radius:12px;padding:10px;font-weight:600;margin-bottom:8px;text-align:center;font-size:13.5px}
+.watpl{display:flex;flex-wrap:wrap;gap:6px}.watpl span{border:1.5px solid var(--line);border-radius:12px;padding:8px 11px;font-size:13px;font-weight:600;cursor:pointer;background:#fff}.watpl span.on{background:#128C4A;color:#fff;border-color:#128C4A}
+.watc{border:1px solid var(--line);border-radius:14px;padding:10px;margin-bottom:10px;background:#FAFCFD}.watc textarea{margin-top:6px}
+.aui{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin-bottom:8px}.auh{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.auh b{font-size:14px}.auh code{background:#F0F4F6;border-radius:8px;padding:2px 8px;font-size:12.5px}
+.auh small{color:var(--mut);font-size:12px;margin-inline-start:auto}.aup{font-size:12px;font-weight:800;border-radius:9px;padding:3px 9px}.aup.au-ok{background:#E8F7EF;color:#1F8A4C}.aup.au-ed{background:#E3F3FA;color:#0E6E86}.aup.au-del{background:#FDECEA;color:#B03A2E}
+.aud{white-space:pre-line;font-size:12.5px;color:#3F5965;background:#F7FAFB;border-radius:10px;padding:8px 10px;margin-top:8px;line-height:1.7}
+.srsheet{max-width:720px;width:100%;max-height:86vh;display:flex;flex-direction:column;padding:0;overflow:hidden}
+.srbar{display:flex;align-items:center;gap:10px;padding:14px;border-bottom:1px solid var(--line)}.srbar span{font-size:20px}.srbar input{flex:1;border:0;font-size:17px;background:transparent;padding:8px 0}.srbar input:focus{outline:none}
+#srRes{overflow:auto;padding:6px 10px 14px}.srg{font-size:12.5px;font-weight:800;color:var(--mut);margin:12px 6px 6px}.srg i{font-style:normal;background:#EEF3F6;border-radius:8px;padding:1px 7px;margin-inline-start:4px}
+.sri{display:flex;align-items:center;gap:12px;padding:10px;border-radius:12px;cursor:pointer}.sri:hover{background:#F2F8FB}.sri span{width:40px;height:40px;border-radius:12px;background:#E9F4F9;display:flex;align-items:center;justify-content:center;font-size:19px;flex:none}
+.sri div{flex:1;min-width:0}.sri b{display:block;font-size:14.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.sri small{display:block;color:var(--mut);font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.sri em{font-style:normal;color:var(--mut);font-size:20px}
+@media(min-width:700px){#mSearch{align-items:flex-start;padding-top:9vh}#mSearch .srsheet{border-radius:20px}}
+body.dark .vatsw{background:#132A33}body.dark .vatsw span.on{background:#1E3B47;color:#fff}body.dark .aui,body.dark .watc{background:#173039;border-color:#2A4252}body.dark .aud{background:#132A33;color:#C9DCE4}body.dark .sri:hover{background:#173039}body.dark .srbar input{color:#E6F1F5}
+
 #updBar{position:fixed;bottom:calc(14px + env(safe-area-inset-bottom));right:12px;left:12px;z-index:70;display:none;align-items:center;justify-content:space-between;gap:10px;background:#06323F;color:#fff;border-radius:16px;padding:12px 14px;font-weight:700;font-size:14px;box-shadow:0 12px 30px rgba(0,0,0,.35)}#updBar button{border:0;background:#2BA3D6;color:#fff;border-radius:10px;padding:9px 14px;font-family:inherit;font-weight:800;font-size:14px}
 .sync{position:sticky;top:0;z-index:9;text-align:center;font-size:13px;font-weight:700;padding:7px 10px;cursor:pointer;color:#fff;background:#1F8A4C}
 .sync.off{background:#6B7A83}.sync.wait{background:#B7791F}.sync.busy{background:#2B7FA8}.sync.bad{background:#C0392B}.sync:empty{display:none}
@@ -416,7 +436,7 @@ body.dark .qopts span{background:#173039;border-color:#2A4252;color:#C9DCE4}body
     <label>كلمة المرور</label><div class="lin"><i>🔒</i><input id="lp" type="password" autocomplete="current-password"><i class="eyeb" onclick="var p=document.getElementById('lp');p.type=p.type==='password'?'text':'password'">👁</i></div>
     <div style="height:14px"></div>
     <button class="btn p full" onclick="doLogin()">دخول</button><button class="btn g full bio" id="bioBtn" style="display:none" onclick="bioLogin()"></button>
-    <p class="muted" id="lerr" style="color:var(--bad);text-align:center"></p><div class="ver">تطبيق المسح الميداني · الإصدار 2.1 (بدون إنترنت)</div>
+    <p class="muted" id="lerr" style="color:var(--bad);text-align:center"></p><div class="ver">تطبيق المسح الميداني · الإصدار 2.2 (بدون إنترنت)</div>
   </div>
 </div>
 
@@ -446,7 +466,8 @@ body.dark .qopts span{background:#173039;border-color:#2A4252;color:#C9DCE4}body
     </div>
     <div class="card"><h2>العميل والموقع</h2>
       <label>اسم العميل / الجهة *</label><input id="f_client">
-      <div class="row"><div><label>الهاتف</label><input id="f_phone" inputmode="tel"></div><div><label>المدينة</label><input id="f_city" list="cities"></div></div>
+      <div class="row"><div><label>📞 رقم المكالمات</label><input id="f_phone" inputmode="tel" placeholder="09xxxxxxxx"></div><div><label>💬 رقم الواتساب <a class="samep" href="#" onclick="$('f_wa').value=$('f_phone').value;return false">= نفس الرقم</a><a class="samep" href="#" onclick="visWa();return false">💬 مراسلة</a></label><input id="f_wa" inputmode="tel" placeholder="09xxxxxxxx"></div></div>
+      <div class="row"><div><label>المدينة</label><input id="f_city" list="cities"></div><div></div></div>
       <label>العنوان / وصف الموقع</label><input id="f_address">
       <label>الموقع على الخريطة (GPS)</label>
       <div class="bar"><input id="f_gps" style="flex:1" placeholder="اضغط تحديد الموقع"><button class="btn g" onclick="gps()">📍 تحديد</button></div>
@@ -632,7 +653,7 @@ var L = {
   putRec: function (id, r) { return DB.set('v:' + id, r); },
   upsertList: function (item) { return L.list().then(function (l) { var i = l.findIndex(function (x) { return x.id === item.id; }); if (i >= 0) l[i] = Object.assign(l[i], item); else l.unshift(item); return DB.set('list', l); }); }
 };
-var VKEYS = ['id','date','tech','client','phone','address','city','gps','systems','building','floors','purpose','status','needsText','budget','ctrl','power','internet','notes','quote','createdBy','updated','report','ref','created'];
+var VKEYS = ['id','date','tech','client','phone','address','city','gps','systems','building','floors','purpose','status','needsText','budget','ctrl','power','internet','notes','quote','createdBy','updated','report','ref','created','wa'];
 function vArr(d, old) { return VKEYS.map(function (k, i) { var x = d[k]; if (k === 'updated') return now_(); if ((x === undefined || x === null) && old) return old[i] || ''; return x === undefined || x === null ? '' : x; }); }
 function listItem(v, pts) { return {id: v[0], date: v[1], tech: v[2], client: v[3], city: v[6], systems: v[8], purpose: v[11], status: v[12], ref: v[23], points: pts, local: String(v[0]).indexOf('L-') === 0}; }
 function pending(id) { return L.q().then(function (q) { return q.some(function (o) { return o.vid === id; }); }); }
@@ -1142,6 +1163,9 @@ Object.assign(I18N,{"شاشة العرض": "Monitor", "المقاس المطلو
 Object.assign(I18N,{"الإصدار 2.0 (بدون إنترنت)": "Version 2.0 (offline)"});
 Object.assign(I18N,{"اسأل العميل أثناء الزيارة –": "Ask the client during the visit –", "كل الأسئلة إلزامية": "all questions are required", "«لا» تُلغي البند من الاحتياجات، و«⚙ تلقائي» تطبّق إعدادات الشركة.": "“No” removes the item from the needs, and “⚙ Auto” applies the company settings.", "مطلوب": "Required", "📋 أكمل استبيان العميل:": "📋 Complete the client questionnaire:"});
 Object.assign(I18N,{"الإصدار 2.1 (بدون إنترنت)": "Version 2.1 (offline)"});
+Object.assign(I18N,{"⚙️ أدوات المدير": "⚙️ Admin tools", "أدوات المدير": "Admin tools", "سجل التعديلات، النسخ الاحتياطي، وقوالب رسائل واتساب": "Audit log, backups and WhatsApp templates", "📜 سجل التعديلات": "📜 Audit log", "💾 النسخ الاحتياطي": "💾 Backups", "💬 قوالب واتساب": "💬 WhatsApp templates", "المستخدم": "User", "القسم": "Section", "العملية": "Action", "كل الأقسام": "All sections", "من تاريخ": "From", "إلى تاريخ": "To", "بحث": "Search", "🔎 عرض": "🔎 Show", "↺ مسح الفلاتر": "↺ Clear filters", "عملية": "actions", "إضافة": "Added", "حذف": "Deleted", "💾 النسخ الاحتياطي التلقائي": "💾 Automatic backups", "آخر نسخة": "Last backup", "عدد النسخ المحفوظة": "Saved backups", "💾 نسخة احتياطية الآن": "💾 Back up now", "📁 فتح المجلد": "📁 Open folder", "النسخ المحفوظة": "Saved backups", "فتح": "Open", "💬 قوالب رسائل واتساب": "💬 WhatsApp message templates", "+ قالب جديد": "+ New template", "💾 حفظ القوالب": "💾 Save templates", "↺ القوالب الافتراضية": "↺ Default templates", "تم حفظ القوالب": "Templates saved", "💬 رسالة واتساب": "💬 WhatsApp message", "رقم الواتساب": "WhatsApp number", "القالب": "Template", "نص الرسالة (يمكنك تعديله)": "Message text (editable)", "💬 فتح واتساب وإرسال": "💬 Open WhatsApp & send", "📎 إرسال ملف PDF": "📎 Send PDF file", "📞 رقم المكالمات": "📞 Calls number", "💬 رقم الواتساب": "💬 WhatsApp number", "= نفس الرقم": "= same number", "📞 المكالمات": "📞 Calls", "💬 واتساب": "💬 WhatsApp", "💬 رسالة واتساب للعميل": "💬 WhatsApp the client", "✓ شامل القيمة المضافة": "✓ Including VAT", "بدون قيمة مضافة": "Without VAT", "✅ اعتماد بالختم والتوقيع": "✅ Approve with stamp & signature", "💬 إرسال للعميل على واتساب": "💬 Send to client on WhatsApp", "📄 PDF + أرشيف": "📄 PDF + archive", "ابحث في كل النظام: عميل، مشروع، زيارة، مستند، IP، رقم تسلسلي...": "Search the whole system: client, project, visit, document, IP, serial...", "اكتب حرفين على الأقل للبحث": "Type at least two letters", "الأجهزة المركبة": "Installed devices", "✏️ عُدّلت:": "✏️ Edited:"});
+Object.assign(I18N,{"شامل القيمة المضافة": "Including VAT", "💬 مراسلة": "💬 Message"});
+Object.assign(I18N,{"الإصدار 2.2 (بدون إنترنت)": "Version 2.2 (offline)"});
 
 
 var S={token:null,user:null,visits:[],cur:null,points:[],refPoints:[],det:{},pt:null,ck:null,photo:{},ftype:'الكل',type:'مسح'};
@@ -1203,8 +1227,8 @@ function applySug(){var s=S.sug;if(!s)return;$('pt_mp').value=s.mp;$('pt_lens').
 function $(i){return document.getElementById(i)}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function toast(t){var e=$('toast');e.textContent=t;e.style.display='block';clearTimeout(e._t);e._t=setTimeout(function(){e.style.display='none'},2600)}
-var APPV='5.5';
-function show(v){NAVSEQ++;if(v!=='vLogin'&&!S.token){v='vLogin'}['vLogin','vList','vVisit','vDash','vClients','vProjects','vProject','vWork','vSales','vDoc','vFin','vLetter','vExp','vLabels','vSupport'].forEach(function(x){if($(x))$(x).style.display=x===v?(x==='vLogin'?'flex':'block'):'none'});window.scrollTo(0,0);if(typeof navOnShow==='function')navOnShow(v)}
+var APPV='6.0';
+function show(v){NAVSEQ++;if(v!=='vLogin'&&!S.token){v='vLogin'}['vLogin','vList','vVisit','vDash','vClients','vProjects','vProject','vWork','vSales','vDoc','vFin','vLetter','vExp','vLabels','vSupport','vAdmin'].forEach(function(x){if($(x))$(x).style.display=x===v?(x==='vLogin'?'flex':'block'):'none'});window.scrollTo(0,0);if(typeof navOnShow==='function')navOnShow(v)}
 /* ---------- server calls: thin progress bar, overlay only if slow, read cache (stale-while-revalidate) ---------- */
 var NAVSEQ=0,DC={},BUSY=0,LOADN=0,LOADT=null;
 function busy(n){BUSY=Math.max(0,BUSY+n);var b=$('tbar');if(b)b.className=BUSY?'on':''}
@@ -1284,8 +1308,8 @@ function nvPick(i){$('nvAsk').style.display='none';newVisit();if(i<0)return;var 
   if(sv){setType('متابعة',false,true);fillRefSelect();$('f_ref').value=sv.id;pickRef();toast('تم ربط الزيارة بمشروع '+g.k+' – اختر نوع الزيارة')}
 }
 /* ---------- visit ---------- */
-var F=['client','phone','city','address','gps','date','tech','status','building','floors','ctrl','power','internet','needsText','budget','quote','notes'];
-var COL={date:1,tech:2,client:3,phone:4,address:5,city:6,gps:7,building:9,floors:10,status:12,needsText:13,budget:14,ctrl:15,power:16,internet:17,notes:18,quote:19};
+var F=['client','phone','wa','city','address','gps','date','tech','status','building','floors','ctrl','power','internet','needsText','budget','quote','notes'];
+var COL={date:1,tech:2,client:3,phone:4,address:5,city:6,gps:7,building:9,floors:10,status:12,needsText:13,budget:14,ctrl:15,power:16,internet:17,notes:18,quote:19,wa:25};
 function setType(k,keepStatus,force){
   if(!force&&S.cur&&S.cur.id&&S.savedType&&k!==S.savedType){
     var src=S.cur.id,isSv=S.savedType==='مسح',lbl=TYPES.filter(function(x){return x.k===k})[0].p;
@@ -1313,7 +1337,7 @@ function fillRefSelect(){
 function pickRef(){
   var id=$('f_ref').value;S.cur.ref=id;if(!id){S.refPoints=[];fillRefSelect();return}
   api('getVisit',[S.token,id],function(d){
-    var v=d.v;['client','phone','city','address','gps'].forEach(function(k){if(!$('f_'+k).value)$('f_'+k).value=v[COL[k]]||''});
+    var v=d.v;['client','phone','wa','city','address','gps'].forEach(function(k){if(!$('f_'+k).value)$('f_'+k).value=v[COL[k]]||''});
     sysChips(String(v[8]||'').split('، '));S.refPoints=d.points;fillRefSelect();toast('تم تحميل بيانات المشروع ونقاطه');
   });
 }
@@ -1372,7 +1396,7 @@ function gps(){
 function renderPoints(){
   var cams=0,out=0,m=0,miss=0,who={};S.points.forEach(function(p){if(isCam(p.dev)){cams++;if(p.io==='خارجي')out++}m+=parseFloat(p.dist)||0;if(ptMiss(p).length)miss++;var b=p.by||'—';who[b]=(who[b]||0)+1});
   $('ptSum').innerHTML=S.points.length?'<div class="ptsum"><div><b>'+S.points.length+'</b><span>نقطة</span></div><div><b>'+cams+'</b><span>كاميرا ('+out+' خارجي)</span></div><div><b>'+Math.round(m)+'</b><span>متر كيبل</span></div>'+(miss?'<div class="bad"><b>'+miss+'</b><span>ناقصة البيانات</span></div>':'')+'</div><div class="whob">👥 أدخلها: '+Object.keys(who).map(function(k){return esc(k)+' <b>'+who[k]+'</b>'}).join(' · ')+' – <small>تحقق من القائمة قبل إضافة نقطة حتى لا تتكرر</small></div>':'';
-  $('points').innerHTML=S.points.length?S.points.map(function(p,i){return '<div class="item" onclick="openPoint('+i+')"><div class="no">'+esc(p.no)+'</div><div class="b"><b>'+esc(p.area)+' – '+esc(p.loc)+'</b><small>'+esc(p.dev)+(p.mp?' '+esc(p.tech+' '+p.mp+' '+p.lens):'')+(p.dir?' · '+esc(p.dir):'')+(p.dist?' · 📏 '+esc(p.dist)+' م':'')+(p.h?' · 📐 '+esc(p.h)+' م':'')+(p.by?' · 👤 '+esc(p.by):'')+(ptMiss(p).length?' · <b style="color:var(--bad)">⚠ ناقص الطول/الارتفاع</b>':'')+(p.photo?' · 📷':'')+'</small></div><span class="tag'+(p.io==='خارجي'?' out':'')+'">'+esc(p.io)+'</span></div>'}).join(''):'<div class="empty">لا توجد نقاط بعد.<br>أضف كل كاميرا أو جهاز مع صورة لموقعه.</div>';
+  $('points').innerHTML=S.points.length?S.points.map(function(p,i){return '<div class="item" onclick="openPoint('+i+')"><div class="no">'+esc(p.no)+'</div><div class="b"><b>'+esc(p.area)+' – '+esc(p.loc)+'</b><small>'+esc(p.dev)+(p.mp?' '+esc(p.tech+' '+p.mp+' '+p.lens):'')+(p.dir?' · '+esc(p.dir):'')+(p.dist?' · 📏 '+esc(p.dist)+' م':'')+(p.h?' · 📐 '+esc(p.h)+' م':'')+(p.by?' · 👤 '+esc(p.by):'')+(p.ed?'<br><i class="pted">✏️ عُدّلت: '+esc(p.ed)+'</i>':'')+(ptMiss(p).length?' · <b style="color:var(--bad)">⚠ ناقص الطول/الارتفاع</b>':'')+(p.photo?' · 📷':'')+'</small></div><span class="tag'+(p.io==='خارجي'?' out':'')+'">'+esc(p.io)+'</span></div>'}).join(''):'<div class="empty">لا توجد نقاط بعد.<br>أضف كل كاميرا أو جهاز مع صورة لموقعه.</div>';
 }
 function openPoint(i){
   need(function(){
@@ -1387,8 +1411,8 @@ function openPoint(i){
     if(DEVS.indexOf(dv)<0)dv=DEVS[0];$('pt_dev').value=dv;segSet('seg_io','pt_io',io);segSet('seg_tech','pt_tech',tech);segSet('seg_use','pt_use',use);segSet('seg_rng','pt_rng',rng);
     $('pt_mp').value=p&&p.mp||'4MP';$('pt_lens').value=p&&p.lens||'2.8mm';$('pt_night').value=p&&p.night||NIGHT[0];devChg();
     $('pt_file').value='';$('pt_prev').style.display='none';$('pt_link').innerHTML=p&&p.photo?'<a href="#" onclick="showPhoto(\''+p.no+'\',\'pt_prev\');return false">📷 عرض الصورة المحفوظة</a>':'';
-    S.ptLock=p?lockWhy(p.by,p.t,S.vOpen):(S.vOpen||isAdm()?'':'🔒 الزيارة مغلقة – الإضافة من حساب المدير فقط');lockNote('ptLockN',S.ptLock);
-    $('ptDel').style.display=p&&isAdm()?'inline-flex':'none';$('mPoint').style.display='flex';
+    S.ptLock=S.vOpen||isAdm()?'':(p?'🔒 الزيارة مغلقة – التعديل من حساب المدير فقط':'🔒 الزيارة مغلقة – الإضافة من حساب المدير فقط');lockNote('ptLockN',S.ptLock);
+    $('ptDel').style.display=p&&(isAdm()||S.vOpen)?'inline-flex':'none';$('mPoint').style.display='flex';
   });
 }
 function showPhoto(no,el){api('getPhoto',[S.token,S.cur.id,no],function(d){if(d){$(el).src=d;$(el).style.display='block'}else toast('لا توجد صورة')})}
@@ -1418,7 +1442,7 @@ function savePoint(next){
   if(!p.photoData&&!p.photo){$('pt_file').classList.add('err');toast(NOPH);return}
   api('savePoint',[S.token,S.cur.id,p],function(){closePoint();toast(next?'✓ تم الحفظ – النقطة التالية':'تم حفظ النقطة');reloadPoints(next?function(){openPoint()}:null)});
 }
-function delPoint(){if(!S.pt||!confirm('حذف النقطة '+S.pt.no+'؟'))return;api('deletePoint',[S.token,S.cur.id,S.pt.no],function(){closePoint();reloadPoints()})}
+function delPoint(){if(!S.pt||!confirm('حذف النقطة '+S.pt.no+' ('+S.pt.area+' – '+S.pt.loc+')؟\nسيتم تسجيل الحذف في سجل التعديلات.'))return;api('deletePoint',[S.token,S.cur.id,S.pt.no],function(){closePoint();reloadPoints()})}
 function reloadPoints(cb){api('getVisit',[S.token,S.cur.id],function(d){S.points=d.points;renderPoints();if(cb)cb()})}
 function renderNeeds(L){$('needs').innerHTML=L&&L.length?'<table><tr><th>البند</th><th>الكمية</th><th>الأساس</th></tr>'+L.map(function(n){return '<tr><td>'+esc(n.item)+'</td><td class="q">'+esc(n.qty)+' <small>'+esc(n.unit)+'</small></td><td class="muted">'+esc(n.basis)+'</td></tr>'}).join('')+'</table>':'<div class="empty">اضغط «حساب الاحتياجات» بعد إدخال النقاط.</div>'}
 /* ---------- client questionnaire: optional items (per visit, key 'q') ---------- */
@@ -1545,6 +1569,9 @@ function idleCheck(){if(S.token&&IDLE&&Date.now()-IDLE>IDLE_MS){logout(true);$('
 document.addEventListener('visibilitychange',function(){if(!document.hidden)idleCheck()});window.addEventListener('focus',idleCheck);
 setInterval(idleCheck,20000);idleTouch();
 $('lp').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin()});
+
+function visWa(){var n=($('f_wa').value||$('f_phone').value||'').trim();if(!n){toast('اكتب رقم الواتساب');return}if(typeof waCompose==='function'){waCompose({name:$('f_client').value,wa:n,tpl:'visit'});return}
+  n=n.replace(/[^\d]/g,'');if(/^0\d{9}$/.test(n))n='249'+n.slice(1);window.open('https://wa.me/'+n,'_blank')}
 
 bioBtnUI();
 
