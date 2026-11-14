@@ -1,4 +1,4 @@
-const C='detouch-field-v6';
+const C='detouch-field-v7';
 const FILES=['./','./index.html','./manifest.json','./icon-192.png','./icon-512.png','./apple-touch-icon.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(FILES.map(f=>new Request(f,{cache:'reload'})))).then(()=>{if(!self.registration.active)return self.skipWaiting()}))});
 self.addEventListener('message',e=>{if(e.data==='skip')self.skipWaiting()});
