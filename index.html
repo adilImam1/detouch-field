@@ -247,6 +247,7 @@ body.dark table td,body.dark table th{border-color:#22394A!important}body.dark t
 body.dark .no{filter:saturate(.9) brightness(.95)}
 body.dark .sync{filter:brightness(.9)}
 header .hlogo{background:none!important;padding:0!important;width:38px!important;height:38px!important;border-radius:11px!important;object-fit:cover;box-shadow:0 0 0 1px rgba(255,255,255,.18)}
+.lockn.info{background:#EAF6FB;border-color:#B9DFEE;color:#0E4A5C}body.dark .lockn.info{background:#12313C;border-color:#24576A;color:#BFE9F7}
 
 #updBar{position:fixed;bottom:calc(14px + env(safe-area-inset-bottom));right:12px;left:12px;z-index:70;display:none;align-items:center;justify-content:space-between;gap:10px;background:#06323F;color:#fff;border-radius:16px;padding:12px 14px;font-weight:700;font-size:14px;box-shadow:0 12px 30px rgba(0,0,0,.35)}#updBar button{border:0;background:#2BA3D6;color:#fff;border-radius:10px;padding:9px 14px;font-family:inherit;font-weight:800;font-size:14px}
 .sync{position:sticky;top:0;z-index:9;text-align:center;font-size:13px;font-weight:700;padding:7px 10px;cursor:pointer;color:#fff;background:#1F8A4C}
@@ -941,7 +942,7 @@ function applySug(){var s=S.sug;if(!s)return;$('pt_mp').value=s.mp;$('pt_lens').
 function $(i){return document.getElementById(i)}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function toast(t){var e=$('toast');e.textContent=t;e.style.display='block';clearTimeout(e._t);e._t=setTimeout(function(){e.style.display='none'},2600)}
-var APPV='4.5';
+var APPV='4.6';
 function show(v){NAVSEQ++;if(v!=='vLogin'&&!S.token){v='vLogin'}['vLogin','vList','vVisit'].forEach(function(x){$(x).style.display=x===v?(x==='vLogin'?'flex':'block'):'none'});window.scrollTo(0,0)}
 /* ---------- server calls: thin progress bar, overlay only if slow, read cache (stale-while-revalidate) ---------- */
 var NAVSEQ=0,DC={},BUSY=0,LOADN=0,LOADT=null;
@@ -991,7 +992,7 @@ function renderList(){
   var F=['الكل'].concat(TYPES.map(function(t){return t.k}));
   $('fst').innerHTML=F.map(function(s){return '<span class="chip'+(S.ftype===s?' on':'')+'" onclick="S.ftype=\''+s+'\';renderList()">'+s+'</span>'}).join('');
   var q=$('q').value.trim(),L=S.visits.filter(function(v){return (S.ftype==='الكل'||typeOf(v.purpose)===S.ftype)&&(!q||(v.id+v.client+v.city+v.tech).indexOf(q)>=0)});
-  $('list').innerHTML=L.length?L.map(function(v){return '<div class="item" onclick="openVisit(\''+v.id+'\')"><div class="no" style="font-size:11px">'+esc(typeOf(v.purpose))+'</div><div class="b"><b>'+esc(v.client||'(بدون اسم)')+'</b><small>'+esc(v.id)+' · '+esc(v.city)+' · '+esc(v.date)+' · '+esc(v.tech)+'</small>'+(v.ref?'<br><small>المرجع: '+esc(v.ref)+'</small>':'')+'</div><span class="st">'+esc(v.status)+'</span></div>'}).join(''):'<div class="empty">لا توجد زيارات.<br>اضغط + لإضافة زيارة جديدة.</div>';
+  $('list').innerHTML=L.length?L.map(function(v){return '<div class="item" onclick="openVisit(\''+v.id+'\')"><div class="no" style="font-size:11px">'+esc(typeOf(v.purpose))+'</div><div class="b"><b>'+esc(v.client||'(بدون اسم)')+'</b><small>'+(String(v.id).indexOf('L-')===0?'📴 بانتظار الرفع':esc(v.id))+' · '+esc(v.city)+' · '+esc(v.date)+' · '+esc(v.tech)+'</small>'+(v.ref?'<br><small>المرجع: '+esc(v.ref)+'</small>':'')+'</div><span class="st">'+esc(v.status)+'</span></div>'}).join(''):'<div class="empty">لا توجد زيارات.<br>اضغط + لإضافة زيارة جديدة.</div>';
 }
 /* ---------- visit ---------- */
 var F=['client','phone','city','address','gps','date','tech','status','building','floors','ctrl','power','internet','needsText','budget','quote','notes'];
@@ -1054,7 +1055,7 @@ function collect(){
 function visLockUI(){
   var c=$('vTitle').parentNode,n=$('vLockN');if(!n){n=document.createElement('div');n.id='vLockN';c.appendChild(n)}
   var b=$('vDel');if(!b){b=document.createElement('button');b.id='vDel';b.className='btn d';b.style.cssText='margin-top:8px;padding:7px 12px;font-size:13px';b.textContent='🗑 حذف الزيارة';b.onclick=delVisit;c.appendChild(b)}
-  n.innerHTML=S.vLock?'<div class="lockn">'+S.vLock+'<br><small>يمكنك إضافة نقاط وخطوات جديدة'+(S.vOpen?'':' (الزيارة مغلقة – للمدير فقط)')+'، وتعديل بيانات الزيارة من حساب المدير.</small></div>':'';
+  n.innerHTML=!S.vLock?'':S.vOpen?'<div class="lockn info">ℹ️ بيانات الزيارة للقراءة فقط – <b>يمكنك إضافة النقاط والخطوات والصور</b> وإصدار التقرير.<br><small>تعديل البيانات الأساسية من حساب المدير.</small></div>':'<div class="lockn">'+S.vLock+'</div>';
   b.style.display=isAdm()&&S.cur&&S.cur.id?'':'none';
   [].forEach.call(document.querySelectorAll('#p1 input,#p1 select,#p1 textarea'),function(e){e.disabled=!!S.vLock})}
 function delVisit(){if(!S.cur.id||!confirm('حذف الزيارة '+S.cur.id+' نهائياً مع كل نقاطها وصورها؟'))return;api('deleteVisit',[S.token,S.cur.id],function(){toast('تم حذف الزيارة');home()})}
@@ -1193,7 +1194,7 @@ function saveSign(){need(function(){var lw=detLock('sign');if(lw){toast(lw);retu
   if(S.photo.sg_prev)o.picData=S.photo.sg_prev;
   api('saveDetail',[S.token,S.cur.id,'sign',o,data],function(r){S.det.sign=r;detDone('sign');sigDirty=false;S.photo.sg_prev=null;toast('تم حفظ الاعتماد والتوقيع')})})}
 /* ---------- report ---------- */
-function repPreview(){var w=previewWin();if(!w)return;saveVisit(function(){api('makeReport',[S.token,S.cur.id,true],function(r){showPreview(w,r.html)},function(){w.close()})})}
+function repPreview(){var w=previewWin();if(!w)return;saveVisit(function(){api('makeReport',[S.token,S.cur.id,true],function(r){showPreview(w,r.html)})})}
 function report(){saveVisit(function(){
   api('makeReport',[S.token,S.cur.id],function(r){S.rep=r;
     var bin=atob(r.b64),u=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);
