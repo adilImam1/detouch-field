@@ -305,6 +305,52 @@ body.dark .lbg div{background:#173039;border-color:#2A4252}body.dark .lbi{border
 .lbcr .btn{padding:6px 0}.lbcr small{grid-column:2/-1;font-size:11px;color:var(--mut);font-family:"JetBrains Mono",Consolas,monospace}.lbcr.void{opacity:.5}.lbcr[data-d="1"] input:not([type=checkbox]){background:#FFF8E1}
 @media(max-width:420px){.lbch,.lbcr{grid-template-columns:22px 48px 1fr 1fr 38px;gap:4px}.lbcr input{font-size:13px;padding:7px 4px}}
 body.dark .lbcr{border-color:#22394A}body.dark .lbcr[data-d="1"] input:not([type=checkbox]){background:#3a3420}
+/* ===== navigation bar: back / breadcrumb / home ===== */
+.crumb{display:flex;align-items:center;gap:8px;max-width:1120px;margin:10px auto 0;padding:0 12px;position:sticky;top:64px;z-index:4}
+.crumb>*{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.cb-back,.cb-home{display:flex;align-items:center;gap:7px;border:1px solid var(--line);background:rgba(255,255,255,.92);color:var(--n);border-radius:14px;padding:9px 14px;font:inherit;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 2px 10px rgba(6,50,63,.08);transition:transform .15s,box-shadow .15s,background .15s;flex:none}
+.cb-back i{font-style:normal;display:inline-block;font-size:15px;transition:transform .15s}.cb-home i{font-style:normal}
+.cb-back:hover,.cb-home:hover{background:#fff;box-shadow:0 4px 16px rgba(6,50,63,.14);transform:translateY(-1px)}.cb-back:hover i{transform:translateX(3px)}
+.cb-back{background:linear-gradient(135deg,#0E6E86,#06323F);color:#fff;border-color:transparent}.cb-back:hover{background:linear-gradient(135deg,#1180a0,#0a4352)}
+.cb-back:disabled{opacity:.45;cursor:default;transform:none}
+.cb-path{flex:1;min-width:0;display:flex;align-items:center;gap:6px;overflow-x:auto;scrollbar-width:none;white-space:nowrap;background:rgba(255,255,255,.85);border:1px solid var(--line);border-radius:14px;padding:9px 12px;font-size:13.5px;color:var(--mut)}
+.cb-path::-webkit-scrollbar{display:none}.cb-path a{cursor:pointer;color:var(--a);font-weight:600}.cb-path a:hover{text-decoration:underline}.cb-path i{font-style:normal;color:#A9BAC2}.cb-path b{color:var(--n)}
+body.en .cb-back i{transform:scaleX(-1)}body.en .cb-back:hover i{transform:scaleX(-1) translateX(3px)}body.en .cb-path i{transform:scaleX(-1);display:inline-block}
+@media(max-width:600px){.crumb{top:58px;gap:6px;padding:0 10px;margin-top:8px}.cb-back,.cb-home{padding:8px 11px}.cb-home span{display:none}.cb-path{padding:8px 10px;font-size:12.5px}}
+@media(min-width:960px){.crumb{padding:0 24px;margin-top:16px;top:72px}}
+body.dark .cb-home,body.dark .cb-path{background:rgba(23,48,57,.9);border-color:#2A4252;color:#C9DCE4}body.dark .cb-path b{color:#fff}
+#n_lb,#n_sup{display:none!important}@media(min-width:960px){#n_lb,#n_sup{display:flex!important}}
+/* dashboard quick actions as tiles */
+.quick{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;overflow:visible}
+.quick .btn{min-height:54px;font-size:14.5px;border-radius:14px;justify-content:center;box-shadow:0 2px 10px rgba(6,50,63,.06)}
+@media(max-width:600px){.quick{grid-template-columns:1fr 1fr}.quick .btn{min-height:48px;font-size:13.5px;padding:8px}}
+/* ===== support page ===== */
+.sp-head .sp-ttl{display:flex;gap:12px;align-items:center;margin-bottom:12px}.sp-ic{width:52px;height:52px;border-radius:16px;background:linear-gradient(135deg,#0E6E86,#06323F);display:flex;align-items:center;justify-content:center;font-size:26px;flex:none;box-shadow:0 6px 16px rgba(6,50,63,.25)}
+.sp-head h2{margin:0;border:0;padding:0}.sp-head p{margin:3px 0 0;font-size:13px}.sp-q{font-size:15px;padding:13px 14px;border-radius:14px;margin-bottom:6px}
+.sp-kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:12px}.spk{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 6px;text-align:center;cursor:pointer;transition:transform .15s}.spk:hover{transform:translateY(-2px)}
+.spk b{display:block;font-size:22px;color:var(--n)}.spk span{font-size:12px;color:var(--mut)}.spk.ok b{color:#1F8A4C}.spk.soon b{color:#B8860B}.spk.no b{color:#C0392B}.spk.na b{color:#8A9AA2}.spk.on{outline:2px solid var(--a)}
+@media(max-width:700px){.sp-kpis{grid-template-columns:repeat(3,1fr)}}
+.sp-act{margin-bottom:12px}.sp-act .btn{flex:1}
+.sp-pj{padding:0;overflow:hidden}.sp-ph{display:flex;align-items:center;gap:12px;padding:14px;cursor:pointer}.sp-ph:hover{background:#F6FAFC}
+.sp-pid{background:#E3F3FA;color:var(--n);font-weight:800;border-radius:12px;padding:8px 10px;font-family:"JetBrains Mono",Consolas,monospace;font-size:13px;flex:none}
+.sp-pn{flex:1;min-width:0}.sp-pn b{display:block;font-size:15px}.sp-pn small{color:var(--mut);font-size:12.5px}
+.sp-pc{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.sp-pc span{background:#F2F6F8;border-radius:10px;padding:4px 8px;font-size:12.5px;font-weight:700;color:var(--n)}.sp-pc .w{background:#FFF4E5;color:#A85A00}
+.sp-chev{font-style:normal;font-size:22px;color:var(--mut);transition:transform .2s;transform:rotate(90deg)}.sp-pj.open .sp-chev{transform:rotate(-90deg)}
+.sp-pb{display:none;padding:0 14px 12px;border-top:1px solid #EEF2F4}.sp-pj.open .sp-pb{display:block}
+.sp-pa{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 4px}.sp-pa .btn{padding:8px 12px;font-size:13px}
+.sp-sec{font-weight:800;color:var(--n);font-size:13.5px;margin:14px 2px 6px}
+.sp-r{display:grid;grid-template-columns:40px 1fr auto auto;gap:10px;align-items:center;padding:9px 6px;border-radius:12px;cursor:pointer;border-bottom:1px solid #F0F4F6}.sp-r:hover{background:#F4F9FB}
+.sp-ic2{width:40px;height:40px;border-radius:12px;background:#E9F4F9;display:flex;align-items:center;justify-content:center;font-size:19px}.sp-ic2 b{font-family:Outfit,Inter,sans-serif;color:var(--n);font-size:15px}
+.sp-m{min-width:0}.sp-m b{display:block;font-family:"JetBrains Mono",Consolas,monospace;font-size:13px}.sp-m small{color:var(--mut);font-size:12px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sp-ip{font-family:"JetBrains Mono",Consolas,monospace;font-size:12.5px;color:var(--n)}.sp-ip i{color:#B0BEC5;font-style:normal}
+.sp-w{font-size:11.5px;font-weight:700;border-radius:10px;padding:4px 8px;white-space:nowrap}.sp-w.ok{background:#E8F7EF;color:#1F8A4C}.sp-w.soon{background:#FFF4E0;color:#A86A00}.sp-w.no{background:#FDECEA;color:#B03A2E}.sp-w.na{background:#F1F4F5;color:#7D8E96}
+@media(max-width:600px){.sp-r{grid-template-columns:36px 1fr auto}.sp-r .sp-w{grid-column:2/-1;justify-self:start}.sp-ic2{width:36px;height:36px}}
+.sp-kv .mono{font-family:"JetBrains Mono",Consolas,monospace}.sp-h3{font-size:14.5px;margin:16px 0 8px;color:var(--n)}
+.sp-log{max-height:180px;overflow:auto;border:1px solid var(--line);border-radius:12px;margin-bottom:8px}.sp-log div{padding:8px 10px;border-bottom:1px solid #EEF2F4;font-size:13px}.sp-log div:last-child{border-bottom:0}
+.sp-acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.sp-acts .btn{flex:1 1 140px;font-size:13px}
+body.dark .spk,body.dark .sp-pc span{background:#173039;border-color:#2A4252}body.dark .sp-ph:hover,body.dark .sp-r:hover{background:#173039}body.dark .sp-pid,body.dark .sp-ic2{background:#1E3B47;color:#CDE7F0}body.dark .sp-r,body.dark .sp-pb{border-color:#22394A}
+
+html[dir=rtl] .sp-m b,html[dir=rtl] .lbcr small{text-align:right}
 
 #updBar{position:fixed;bottom:calc(14px + env(safe-area-inset-bottom));right:12px;left:12px;z-index:70;display:none;align-items:center;justify-content:space-between;gap:10px;background:#06323F;color:#fff;border-radius:16px;padding:12px 14px;font-weight:700;font-size:14px;box-shadow:0 12px 30px rgba(0,0,0,.35)}#updBar button{border:0;background:#2BA3D6;color:#fff;border-radius:10px;padding:9px 14px;font-family:inherit;font-weight:800;font-size:14px}
 .sync{position:sticky;top:0;z-index:9;text-align:center;font-size:13px;font-weight:700;padding:7px 10px;cursor:pointer;color:#fff;background:#1F8A4C}
@@ -1042,6 +1088,7 @@ function langBtns(){
 }
 Object.assign(I18N,{"الملصقات": "Labels", "🏷 الملصقات": "🏷 Labels", "🏷 الملصقات والأرقام التسلسلية": "🏷 Labels & serial numbers", "المشروع": "Project", "الموقع / المدينة (يظهر على الملصق)": "Location / city (printed on the label)", "🖥 الأجهزة": "🖥 Devices", "📷 الكاميرات": "📷 Cameras", "📄 قوالب فارغة": "📄 Blank templates", "⚙ القالب": "⚙ Template", "👁 معاينة الملصق": "👁 Label preview", "🖨 التصدير والطباعة": "🖨 Export & print", "طريقة الطباعة": "Print layout", "ملصق في كل صفحة (طابعة ملصقات)": "One label per page (label printer)", "ورقة A4 (مطبعة / طابعة عادية)": "A4 sheet (print shop / office printer)", "المقاس": "Size", "الألوان": "Colours", "داكن عصري (طابعة ملونة)": "Modern dark (colour printer)", "فاتح (طابعة حرارية أبيض وأسود)": "Light (thermal black & white)", "🖨 معاينة وتصدير PDF": "🖨 Preview & export PDF", "➕ تسجيل أجهزة جديدة": "➕ Register new devices", "نوع الجهاز": "Device type", "العدد": "Quantity", "الموديل (اختياري)": "Model (optional)", "مكان التركيب (اختياري)": "Installation place (optional)", "➕ إضافة بالتسلسل وإنشاء الأرقام": "➕ Add in sequence & create numbers", "➕ تسجيل كاميرات": "➕ Register cameras", "أول IP (اختياري – يزيد تلقائياً)": "First IP (optional – auto-increments)", "المكان (اختياري)": "Place (optional)", "➕ إضافة كاميرات بالتسلسل": "➕ Add cameras in sequence", "📥 إنشاء من نقاط المسح الميداني": "📥 Create from field-survey points", "تحديد الكل": "Select all", "— بدون مشروع (عام) —": "— No project (general) —", "📄 قوالب فارغة (الرقم يُكتب باليد)": "📄 Blank templates (number written by hand)", "⚙ إعدادات القالب (للمدير)": "⚙ Template settings (manager)", "رقم الواتساب": "WhatsApp number", "رقم الاتصال الثاني": "Second phone number", "بادئة الرقم التسلسلي": "Serial prefix", "الضمان الافتراضي": "Default warranty", "رابط صفحة الدعم (QR)": "Support page link (QR)", "النص أسفل الملصق (بدون مشروع)": "Footer text (no project)", "الألوان الافتراضية": "Default colours", "مقاس الأجهزة": "Device size", "مقاس الكاميرات": "Camera size", "💾 حفظ إعدادات القالب": "💾 Save template settings", "تم حفظ إعدادات القالب": "Template settings saved", "رقم الكاميرا": "Camera number", "تاريخ التركيب": "Installation date", "الضمان": "Warranty", "مكان التركيب": "Installation place", "الموديل": "Model", "الموقع / المدينة": "Location / city", "إلغاء الرقم": "Void number", "استعادة": "Restore", "حدّد الملصقات المطلوبة من القائمة أولاً": "Select the labels from the list first", "داكن عصري": "Modern dark", "فاتح (حراري)": "Light (thermal)"});
 Object.assign(I18N,{"الإصدار 1.7 (بدون إنترنت)": "Version 1.7 (offline)", "🌐 عنوان IP": "🌐 IP address", "(اختياري – يُكتب عند التركيب ويظهر على ملصق الكاميرا)": "(optional – entered at installation, printed on the camera label)", "صيغة الـ IP غير صحيحة – مثال 192.168.1.101": "Invalid IP format – e.g. 192.168.1.101", "💾 حفظ التعديلات": "💾 Save changes", "📥 تعبئة من المسح الميداني (رقم النقطة، المكان، IP)": "📥 Fill from field survey (point no., place, IP)", "طباعة رقم الكاميرا والـ IP على الملصق (ألغِ التحديد لطباعة خانات فارغة)": "Print camera number and IP on the label (untick to print empty boxes)", "المكان": "Place"});
+Object.assign(I18N,{"الدعم الفني": "Technical support", "🛠 الدعم الفني": "🛠 Technical support", "🛠 الدعم": "🛠 Support", "رجوع": "Back", "الدعم الفني – سجل الأجهزة المركبة": "Technical support – installed devices registry", "كل جهاز وكاميرا تم تركيبها مع رقمها التسلسلي ومكانها والـ IP وحالة الضمان – مرتبة حسب المشاريع": "Every installed device and camera with its serial, place, IP and warranty status – grouped by project", "🔎 ابحث بالرقم التسلسلي، IP، المكان، الموديل، المشروع أو العميل...": "🔎 Search by serial, IP, place, model, project or client...", "كل المشاريع": "All projects", "كل الأنواع": "All types", "الضمان": "Warranty", "ساري": "Active", "ينتهي خلال 60 يوماً": "Ends within 60 days", "منتهي": "Expired", "بدون تاريخ تركيب": "No install date", "⬇ تصدير Excel": "⬇ Export Excel", "🖨 طباعة السجل": "🖨 Print registry", "الأجهزة": "Devices", "الكاميرات": "Cameras", "ضمان ساري": "Under warranty", "ينتهي قريباً": "Ending soon", "📁 المشروع": "📁 Project", "💬 واتساب العميل": "💬 Client WhatsApp", "بدون مشروع": "No project", "🧰 سجل الصيانة والملاحظات": "🧰 Maintenance log & notes", "لا توجد ملاحظات بعد": "No notes yet", "➕ إضافة": "➕ Add", "🔗 صفحة QR": "🔗 QR page", "📋 نسخ IP": "📋 Copy IP", "🏷 الملصق": "🏷 Label", "✏️ تعديل البيانات": "✏️ Edit details", "تمت إضافة الملاحظة": "Note added", "لا نتائج مطابقة للبحث": "No matching results", "سُجّل بواسطة": "Registered by", "كاميرا": "Camera", "لم يُسجّل التركيب": "Install not recorded", "الضمان غير محدد": "Warranty not set", "تم تنزيل الملف – يفتح في Excel": "File downloaded – opens in Excel", "المشروع P-": "Project P-", "الزيارة": "Visit", "المستند": "Document", "خطاب / تقرير": "Letter / report"});
 
 
 var S={token:null,user:null,visits:[],cur:null,points:[],refPoints:[],det:{},pt:null,ck:null,photo:{},ftype:'الكل',type:'مسح'};
@@ -1103,8 +1150,8 @@ function applySug(){var s=S.sug;if(!s)return;$('pt_mp').value=s.mp;$('pt_lens').
 function $(i){return document.getElementById(i)}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function toast(t){var e=$('toast');e.textContent=t;e.style.display='block';clearTimeout(e._t);e._t=setTimeout(function(){e.style.display='none'},2600)}
-var APPV='5.0';
-function show(v){NAVSEQ++;if(v!=='vLogin'&&!S.token){v='vLogin'}['vLogin','vList','vVisit','vDash','vClients','vProjects','vProject','vWork','vSales','vDoc','vFin','vLetter','vExp','vLabels'].forEach(function(x){if($(x))$(x).style.display=x===v?(x==='vLogin'?'flex':'block'):'none'});window.scrollTo(0,0)}
+var APPV='5.1';
+function show(v){NAVSEQ++;if(v!=='vLogin'&&!S.token){v='vLogin'}['vLogin','vList','vVisit','vDash','vClients','vProjects','vProject','vWork','vSales','vDoc','vFin','vLetter','vExp','vLabels','vSupport'].forEach(function(x){if($(x))$(x).style.display=x===v?(x==='vLogin'?'flex':'block'):'none'});window.scrollTo(0,0);if(typeof navOnShow==='function')navOnShow(v)}
 /* ---------- server calls: thin progress bar, overlay only if slow, read cache (stale-while-revalidate) ---------- */
 var NAVSEQ=0,DC={},BUSY=0,LOADN=0,LOADT=null;
 function busy(n){BUSY=Math.max(0,BUSY+n);var b=$('tbar');if(b)b.className=BUSY?'on':''}
