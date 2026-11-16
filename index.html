@@ -701,7 +701,7 @@ body.dark #nav>div.on b{color:#fff}
     <label>كلمة المرور</label><div class="lin"><i>🔒</i><input id="lp" type="password" autocomplete="current-password"><i class="eyeb" onclick="var p=document.getElementById('lp');p.type=p.type==='password'?'text':'password'">👁</i></div>
     <div style="height:14px"></div>
     <button class="btn p full" onclick="doLogin()">دخول</button><button class="btn g full bio" id="bioBtn" style="display:none" onclick="bioLogin()"></button>
-    <p class="muted" id="lerr" style="color:var(--bad);text-align:center"></p><div class="ver">تطبيق المسح الميداني والمهام · الإصدار 3.1</div>
+    <p class="muted" id="lerr" style="color:var(--bad);text-align:center"></p><div class="ver">تطبيق المسح الميداني والمهام · الإصدار 3.2</div>
   </div>
 </div>
 
@@ -1476,6 +1476,11 @@ Object.assign(I18N,{"👥 اختيار العميل": "👥 Choose client", "�
 /* v3.0 additions */
 Object.assign(I18N,{"آخر الزيارات": "Recent visits", "أمس": "Yesterday", "أنشأها": "Created by", "إشعارات تيليجرام": "Telegram notifications", "اتصل بالمكتب": "Call office", "الإعدادات": "Settings", "التطبيق": "App", "الحساب والأمان": "Account & security", "العميل / المشروع": "Client / project", "العميل / المشروع (اختياري)": "Client / project (optional)", "اللغة": "Language", "المزامنة": "Sync", "الموعد": "Due", "الوقت": "Time", "تذكير بعمل تحتاج إنجازه": "A reminder for something you need to do", "تطبيق المسح الميداني والمهام": "Field survey & tasks app", "تنبيهات الهاتف (المهام الجديدة)": "Phone alerts (new tasks)", "جدول اليوم": "Today's schedule", "دليل الاستخدام": "User guide", "غير مفعّلة من الإدارة": "Not enabled by admin", "لا توجد زيارات بعد – اضغط ＋ لإضافة زيارة": "No visits yet – tap ＋ to add one", "مثال: مسح موقع – مصرف الادخار": "e.g. Site survey – bank HQ", "محظورة من إعدادات المتصفح": "Blocked in browser settings", "مزامنة الآن": "Sync now", "مسح، متابعة، استلام، صيانة": "Survey, follow-up, handover, maintenance", "ملاحظة الإنجاز (اختياري)": "Completion note (optional)", "يومي": "My day", "تسجيل الخروج": "Sign out", "متأخرة لم تُنجز": "Overdue", "المهمة لك أنت": "This task is assigned to you", "حفظ وإرسال": "Save & send", "جدول الأيام السبعة القادمة": "Next 7 days", "فعّل الإشعارات التلقائية": "Turn on automatic notifications", "اربط بوت تيليجرام مرة واحدة لتصل المهام والتذكيرات للموظفين تلقائياً": "Link the Telegram bot once – tasks and reminders then reach your team automatically", "إعداد": "Set up", "عرض الكل": "See all", "مسجّل على هذا الهاتف": "signed in on this phone", "زيارة جديدة": "New visit", "مهمة لنفسي": "Task for me", "مهمة لنفسك": "Task for yourself", "التالية": "Next", "مفعّلة": "Enabled", "تفعيل": "Turn on", "غير مدعومة": "Not supported", "الدخول بالبصمة / Face ID": "Sign in with fingerprint / Face ID", "الوضع الليلي": "Dark mode", "الإشعارات": "Notifications", "بانتظار الرفع": "Waiting to upload", "جارِ تحميل المهام…": "Loading tasks…", "لا توجد مهام مستحقة اليوم": "No tasks due today", "مسح، متابعة، استلام، صيانة ": "Survey, follow-up, handover, maintenance", "بحث شامل": "Search everything", "بحث شامل (Ctrl+K)": "Search everything (Ctrl+K)", "المهام الإدارية لا تظهر للفنيين إطلاقاً": "Admin tasks are never shown to technicians", "طلبات الموقع": "Website requests"});
 function LX(a,e){return LANG==='en'?e:a}
+function nmOf(user,ar,en){if(LANG!=='en')return ar||'';if(en)return en;var k=String(user||'').toLowerCase(),L=(typeof TK!=='undefined'&&TK.d&&TK.d.users)||(typeof O!=='undefined'&&O&&O.users)||[];
+  for(var i=0;i<L.length;i++)if(String(L[i].user).toLowerCase()===k&&L[i].nameEn)return L[i].nameEn;
+  if(typeof S!=='undefined'&&S.user&&String(S.user.user).toLowerCase()===k&&S.user.nameEn)return S.user.nameEn;return ar||''}
+function whoUpd(){var w=document.getElementById('who');if(w&&typeof S!=='undefined'&&S.user)w.textContent=nmOf(S.user.user,S.user.name)+' · '+S.user.role}
+(function(){var f=setLang;setLang=function(l){f(l);try{whoUpd();if(typeof tkRender==='function'&&typeof TK!=='undefined'&&TK.d&&document.getElementById('vTasks')&&document.getElementById('vTasks').style.display!=='none')tkRender()}catch(e){}}})();
 
 
 var S={token:null,user:null,visits:[],cur:null,points:[],refPoints:[],det:{},pt:null,ck:null,photo:{},ftype:'الكل',type:'مسح'};
@@ -1581,7 +1586,7 @@ function doLogin(){
   });
 }
 function loginOK(r){DC={};S.token=r.token;S.user=r.user;try{localStorage.setItem('dt',JSON.stringify(r))}catch(e){}
-  $('lerr').textContent='';idleTouch&&idleTouch();$('hdr').style.display='flex';$('who').textContent=r.user.name+' · '+r.user.role;afterLogin();if(typeof onLoginOK==='function')onLoginOK(r)}
+  $('lerr').textContent='';idleTouch&&idleTouch();$('hdr').style.display='flex';whoUpd();afterLogin();if(typeof onLoginOK==='function')onLoginOK(r)}
 function logout(){if(!arguments[0]&&window.__q&&__q>0&&!confirm('يوجد '+__q+' عنصر لم يُرفع بعد. ستبقى محفوظة في الهاتف وتُرفع بعد الدخول. تسجيل الخروج؟'))return;DC={};if(S.token){try{google.script.run.logoutToken(S.token)}catch(e){}}S.token=null;S.user=null;try{closeForm();pvClose()}catch(e){}try{localStorage.removeItem('dt')}catch(e){}$('hdr').style.display='none';$('nav').style.display='none';$('lp').value='';show('vLogin')}
 /* ---------- list ---------- */
 function home(){swr('lv','listVisits',[S.token],function(r){S.visits=r},function(){renderList();show('vList')})}
@@ -1870,7 +1875,7 @@ function toggleTheme(){var d=!document.body.classList.contains('dark');try{local
 (function(){var r=null;try{r=JSON.parse(localStorage.getItem('dt')||'null')}catch(e){}
   show('vLogin');if(!r||!r.token)return;
   var li=0;try{li=+(localStorage.getItem('dtIdle')||0)}catch(e){}if(li&&Date.now()-li>600000){try{localStorage.removeItem('dt')}catch(e){}$('lerr').textContent='تم تسجيل الخروج بعد 10 دقائق من عدم الاستخدام';return}
-  google.script.run.withSuccessHandler(function(x){S.token=r.token;S.user=x.user;$('hdr').style.display='flex';$('who').textContent=x.user.name+' · '+x.user.role;afterLogin()})
+  google.script.run.withSuccessHandler(function(x){S.token=r.token;S.user=x.user;$('hdr').style.display='flex';whoUpd();afterLogin()})
     .withFailureHandler(function(){try{localStorage.removeItem('dt')}catch(e){}show('vLogin')}).whoami(r.token)})();
 /* auto logout after 10 minutes without activity (works offline; also on reopening the app) */
 var IDLE=0,IDLE_MS=600000;
@@ -1945,14 +1950,14 @@ function tkPill(t){var c=tkCat(t);if(t.st==='ملغاة')return '<span class="pi
   if(t.st==='قيد التنفيذ')return '<span class="pill p3">قيد التنفيذ</span>';
   return '<span class="pill '+(TKPC[t.pr]||'p3')+'">'+esc(t.pr)+'</span>'}
 function tkCard(t){var c=tkCat(t),me=t.mine,open=tkOpenSt(t);
-  var meta=[!me?'👤 '+esc(t.name):'',t.ref?'📍 '+esc(t.ref):'',t.date?'⏰ '+(t.date===tkToday()?'اليوم':t.date===tkAdd(tkToday(),1)?'غداً':t.date)+(t.time?' '+t.time:''):'',t.rep?'🔁 '+t.rep:'',t.kind==='إدارية'?'🗂 إدارية':'',t.by!==t.user&&me&&t.byName?'✍️ '+LX('من ','by ')+esc(String(t.byName).split(' ')[0]):''].filter(String).join(' · ');
+  var meta=[!me?'👤 '+esc(nmOf(t.user,t.name,t.nameEn)):'',t.ref?'📍 '+esc(t.ref):'',t.date?'⏰ '+(t.date===tkToday()?'اليوم':t.date===tkAdd(tkToday(),1)?'غداً':t.date)+(t.time?' '+t.time:''):'',t.rep?'🔁 '+t.rep:'',t.kind==='إدارية'?'🗂 إدارية':'',t.by!==t.user&&me&&t.byName?'✍️ '+LX('من ','by ')+esc(String(nmOf(t.by,t.byName,t.byNameEn)).split(' ')[0]):''].filter(String).join(' · ');
   var bt='';if(me&&open)bt='<div class="tkbt">'+(t.st==='جديدة'?'<span onclick="event.stopPropagation();tkSet(\''+t.id+'\',\'قيد التنفيذ\')">▶ بدأت</span>':'<span onclick="event.stopPropagation();tkView(\''+t.id+'\')">💬 تفاصيل</span>')+'<span class="ok" onclick="event.stopPropagation();tkDone(\''+t.id+'\')">✓ تمّت</span></div>';
   if(c==='done'&&t.dnote)meta+=(meta?' · ':'')+'💬 '+esc(t.dnote);
   return '<div class="tk '+c+(t.kind==='إدارية'?' adm':'')+'" onclick="tkView(\''+t.id+'\')"><div class="a"><b>'+esc(t.title)+'</b>'+tkPill(t)+'</div>'+(meta?'<div class="m">'+meta+'</div>':'')+bt+'</div>'}
 function tkEmpCards(){var U=TK.d.users.filter(function(u){return u.role==='فني'});if(!U.length)return '';
   return U.map(function(u){var L=TK.d.tasks.filter(function(t){return t.user===u.user&&t.kind==='فنية'}),done=L.filter(function(t){return t.st==='مكتملة'}).length,
       open=L.filter(tkOpenSt),late=open.filter(function(t){return tkCat(t)==='late'}).length,td=open.filter(function(t){return tkCat(t)==='today'}).length,tot=done+open.length||1;
-    return '<div class="tkemp'+(TK.emp===u.user?' on':'')+'" onclick="TK.emp=TK.emp===\''+u.user+'\'?\'\':\''+u.user+'\';tkRender()"><div class="a"><div class="n"><i>'+esc(String(u.name).charAt(0))+'</i><b>'+esc(u.name)+'</b></div>'+
+    return '<div class="tkemp'+(TK.emp===u.user?' on':'')+'" onclick="TK.emp=TK.emp===\''+u.user+'\'?\'\':\''+u.user+'\';tkRender()"><div class="a"><div class="n"><i>'+esc(String(nmOf(u.user,u.name)).charAt(0))+'</i><b>'+esc(nmOf(u.user,u.name))+'</b></div>'+
       (late?'<span class="pill p1">'+late+' متأخرة</span>':'<span class="pill p4">في الموعد</span>')+'</div>'+
       '<div class="tkbar"><i style="width:'+Math.round(done/tot*100)+'%;background:var(--ok)"></i><i style="width:'+Math.round((open.length-late)/tot*100)+'%;background:var(--a)"></i><i style="width:'+Math.round(late/tot*100)+'%;background:var(--bad)"></i></div>'+
       '<div class="cn"><span>مكتملة <b>'+done+'</b></span><span>متبقية <b>'+open.length+'</b></span><span>اليوم <b>'+td+'</b></span></div></div>'}).join('')+(TK.emp?'<div class="tksec"><span>مهام '+esc((TK.d.users.filter(function(u){return u.user===TK.emp})[0]||{}).name||'')+'</span><span onclick="TK.emp=\'\';tkRender()" class="lnk">عرض الكل ✕</span></div>':'')}
@@ -1960,7 +1965,7 @@ function tkWeek(){var td=tkToday(),D=[];for(var i=0;i<7;i++)D.push(tkAdd(td,i));
   var U=TK.d.users.filter(function(u){return TK.d.role==='مدير'||u.role==='فني'}).sort(function(a,b){return (a.role==='فني'?0:1)-(b.role==='فني'?0:1)});
   var dn=function(d){try{var m=d.split('-');return new Date(Date.UTC(+m[0],+m[1]-1,+m[2],12)).toLocaleDateString(typeof LANG!=='undefined'&&LANG==='en'?'en-GB':'ar-EG',{weekday:'short'})}catch(e){return d.slice(5)}};
   var rows=U.map(function(u){var L=TK.d.tasks.filter(function(t){return t.user===u.user&&t.st!=='ملغاة'});if(!L.length&&u.role!=='فني')return '';
-    return '<tr><td class="nm">'+esc(String(u.name).split(' ')[0])+'</td>'+D.map(function(d){var X=L.filter(function(t){return t.date===d}).sort(tkSort);
+    return '<tr><td class="nm">'+esc(String(nmOf(u.user,u.name)).split(' ')[0])+'</td>'+D.map(function(d){var X=L.filter(function(t){return t.date===d}).sort(tkSort);
       return '<td>'+X.map(function(t){var c=tkCat(t);return '<span class="ch '+(c==='done'?'c3':c==='late'?'c2':'c1')+'" onclick="tkView(\''+t.id+'\')" title="'+esc(t.title)+'">'+(c==='done'?'✓ ':'')+(t.time?t.time+' ':'')+esc(t.title)+'</span>'}).join('')+'</td>'}).join('')+'</tr>'}).join('');
   var late=TK.d.tasks.filter(function(t){return tkCat(t)==='late'&&(TK.d.role==='مدير'||t.urole==='فني')});
   return '<div class="card tkwk"><h2>🗓 جدول الأيام السبعة القادمة</h2><div class="tkwks"><table><tr><th></th>'+D.map(function(d,i){return '<th class="'+(i===0?'td':'')+'">'+(i===0?'اليوم':dn(d))+'<small>'+d.slice(8)+'/'+d.slice(5,7)+'</small></th>'}).join('')+'</tr>'+rows+'</table></div>'+
@@ -1982,15 +1987,15 @@ function tkView(id){var t=tkGet(id);if(!t)return;var open=tkOpenSt(t),me=t.mine;
   if(me&&open)acts+=(t.st==='جديدة'?'<button class="btn g" onclick="tkSet(\''+id+'\',\'قيد التنفيذ\')">▶ بدأت</button>':'')+'<button class="btn p" onclick="tkDone(\''+id+'\')">✓ تمّت</button>';
   if(!open&&(tkIsAdm()||me)&&t.st!=='ملغاة')acts+='<button class="btn g" onclick="tkSet(\''+id+'\',\'جديدة\')">↩ إعادة فتح</button>';
   if(t.edit&&open)acts+='<button class="btn g" onclick="tkForm(\''+id+'\')">✎ تعديل</button><button class="btn g" onclick="tkSet(\''+id+'\',\'ملغاة\')">⊘ إلغاء المهمة</button>';
-  form(t.id,'<div class="tkvh"><b>'+esc(t.title)+'</b>'+tkPill(t)+'</div><div class="kv">'+row('المسؤول',esc(t.name))+row('النوع',t.kind==='إدارية'?'🗂 إدارية':'🛠 فنية')+row('الموعد',t.date?t.date+(t.time?' – '+t.time:''):'بدون موعد')+
-    row('الأولوية',esc(t.pr))+row('العميل / المشروع',esc(t.ref))+row('التكرار',esc(t.rep))+row('الحالة',esc(t.st))+row('أنشأها',esc(t.byName)+' · '+esc(String(t.created).slice(0,16)))+
+  form(t.id,'<div class="tkvh"><b>'+esc(t.title)+'</b>'+tkPill(t)+'</div><div class="kv">'+row('المسؤول',esc(nmOf(t.user,t.name,t.nameEn)))+row('النوع',t.kind==='إدارية'?'🗂 إدارية':'🛠 فنية')+row('الموعد',t.date?t.date+(t.time?' – '+t.time:''):'بدون موعد')+
+    row('الأولوية',esc(t.pr))+row('العميل / المشروع',esc(t.ref))+row('التكرار',esc(t.rep))+row('الحالة',esc(t.st))+row('أنشأها',esc(nmOf(t.by,t.byName,t.byNameEn))+' · '+esc(String(t.created).slice(0,16)))+
     row('بدأت',esc(t.started))+row('اكتملت',esc(t.done))+'</div>'+(t.notes?'<div class="tknote">📝 '+esc(t.notes)+'</div>':'')+(t.dnote?'<div class="tknote ok">💬 '+esc(t.dnote)+'</div>':'')+
     (acts?'<div class="tkacts">'+acts+'</div>':''),null,t.edit?function(){if(confirm('حذف المهمة نهائياً؟'))api('taskDelete',[S.token,id],function(r){closeForm();tkReload(r);toast('تم الحذف')})}:null)}
 function tkSeg(id,L,v){return '<div class="seg tkseg" id="'+id+'Seg" onclick="var s=event.target.closest(\'span\');if(!s)return;[].forEach.call(this.children,function(c){c.className=c===s?\'on\':\'\'});$(\''+id+'\').value=s.getAttribute(\'data-v\');if(\''+id+'\'===\'tk_kind\')tkUsersFor()">'+
   L.map(function(x){return '<span data-v="'+esc(x[0])+'" class="'+(x[0]===v?'on':'')+'">'+x[1]+'</span>'}).join('')+'</div><input type="hidden" id="'+id+'" value="'+esc(v)+'">'}
 function tkUsersFor(){var s=$('tk_user');if(!s)return;var k=$('tk_kind')?$('tk_kind').value:'فنية',cur=s.value;
   var U=TK.d.users.filter(function(u){return k==='فنية'||u.role!=='فني'});
-  s.innerHTML=U.map(function(u){return '<option value="'+u.user+'"'+(u.user===cur?' selected':'')+'>'+(u.role==='فني'?'👷 ':u.role==='مدير'?'👔 ':'🗂 ')+esc(u.name)+'</option>'}).join('');
+  s.innerHTML=U.map(function(u){return '<option value="'+u.user+'"'+(u.user===cur?' selected':'')+'>'+(u.role==='فني'?'👷 ':u.role==='مدير'?'👔 ':'🗂 ')+esc(nmOf(u.user,u.name))+'</option>'}).join('');
   if(!U.some(function(u){return u.user===cur})&&U[0])s.value=U[0].user}
 function tkRefs(){var o=[];try{if(O.d){O.d.projects.forEach(function(p){if(p.status!=='ملغي'&&p.status!=='مكتمل')o.push(p.name)});O.d.clients.forEach(function(c){o.push(c.name)})}}catch(e){}
   var seen={};return o.filter(function(x){if(!x||seen[x])return false;seen[x]=1;return true}).slice(0,200)}
@@ -2084,12 +2089,12 @@ function goVisitsV3() { closeForm(); setNav('n_v'); home(); }
 function plusOpen() { $('mPlus').style.display = 'flex'; }
 function plusClose() { $('mPlus').style.display = 'none'; }
 function tkNew() { if (TK.d) { tkForm(); return; } apiQ('taskData', [S.token], function (r) { if (r) { tkReload(r); tkForm(); } else toast('افتح المهام مرة واحدة مع الإنترنت'); }); }
-function afterLogin() { navBuild(); goHome(); SYNC.ui(); SYNC.kick(); v3Refresh(); clearInterval(V3.iv); V3.iv = setInterval(v3Refresh, 300000); }
+function afterLogin() { whoUpd(); navBuild(); goHome(); SYNC.ui(); SYNC.kick(); v3Refresh(); clearInterval(V3.iv); V3.iv = setInterval(v3Refresh, 300000); }
 /* ---- «يومي» ---- */
 function goHome() { closeForm(); setNav('n_h'); show('vHome'); renderHome(); }
 function tkDoneToday(t) { return t.st === 'مكتملة' && String(t.done).slice(0, 10) === tkToday(); }
 function renderHome() {
-  if (!$('vHome')) return; var u = S.user || {}, first = String(u.name || '').split(' ')[0], h = new Date().getHours();
+  if (!$('vHome')) return; var u = S.user || {}, first = String(nmOf(u.user, u.name) || '').split(' ')[0], h = new Date().getHours();
   var g = h < 12 ? LX('صباح الخير', 'Good morning') : h < 17 ? LX('مساء الخير', 'Good afternoon') : LX('مساء النور', 'Good evening'), ic = h < 6 || h >= 19 ? '🌙' : h < 12 ? '☀️' : '🌤';
   var dt = ''; try { dt = new Date().toLocaleDateString(typeof LANG !== 'undefined' && LANG === 'en' ? 'en-GB' : 'ar-EG', {weekday: 'long', day: 'numeric', month: 'long'}); } catch (e) {}
   var logo = (document.querySelector('header .hlogo') || {}).src || '', c = tkCounts(), n = c.late + c.today;
@@ -2124,7 +2129,7 @@ function v3Refresh() {
   apiQ('listVisits', [S.token], function (r) { if (r) { S.visits = r; if (V3.cur === 'n_h') renderHome(); } });
 }
 var _tkReload0 = tkReload;
-tkReload = function (r) { _tkReload0(r); v3Notify(r); var d = $('navDot'), c = tkCounts(); if (d) d.style.display = c.late + c.today ? 'block' : 'none'; if (V3.cur === 'n_h') renderHome(); if (V3.cur === 'n_s') renderSet(); };
+tkReload = function (r) { _tkReload0(r); v3Notify(r); whoUpd(); var d = $('navDot'), c = tkCounts(); if (d) d.style.display = c.late + c.today ? 'block' : 'none'; if (V3.cur === 'n_h') renderHome(); if (V3.cur === 'n_s') renderSet(); };
 var _tkPill0 = tkPill;
 tkPill = function (t) { return t.pend ? '<span class="pill p2">⏳ بانتظار الرفع</span>' : _tkPill0(t); };
 /* device notifications while the app is open / in the background (new tasks assigned to me) */
@@ -2148,7 +2153,7 @@ function renderSet() {
   var u = S.user || {}, g = TK.d && TK.d.tg, np = 'Notification' in window ? Notification.permission : 'na', bio = typeof BIO !== 'undefined' && BIO.get(), dark = document.body.classList.contains('dark');
   var sb = $('syncBar'), sync = sb ? sb.textContent : '';
   var row = function (ic, t, right, on) { return '<div class="srow"' + (on ? ' onclick="' + on + '"' : '') + '><i>' + ic + '</i><b>' + t + '</b>' + right + '</div>'; };
-  $('setBody').innerHTML = '<div class="sprof"><div class="av">' + esc(String(u.name || u.user || '؟').charAt(0)) + '</div><div><b>' + esc(u.name || '') + '</b><span>' + esc(u.role || '') + ' · ' + esc(u.user || '') + ' · ' + LX('مسجّل على هذا الهاتف', 'signed in on this phone') + '</span></div></div>' +
+  $('setBody').innerHTML = '<div class="sprof"><div class="av">' + esc(String(nmOf(u.user, u.name) || u.user || '؟').charAt(0)) + '</div><div><b>' + esc(nmOf(u.user, u.name) || '') + '</b><span>' + esc(u.role || '') + ' · ' + esc(u.user || '') + ' · ' + LX('مسجّل على هذا الهاتف', 'signed in on this phone') + '</span></div></div>' +
     '<div class="sset">الإشعارات</div><div class="sbox">' +
       row('✈️', 'إشعارات تيليجرام', !g ? '<em>…</em>' : g.linked ? '<em class="ok">✓ مفعّلة</em>' : g.bot ? '<button class="btn p sm" onclick="event.stopPropagation();tkLinkTg()">تفعيل</button>' : '<em>غير مفعّلة من الإدارة</em>') +
       row('🔔', 'تنبيهات الهاتف (المهام الجديدة)', np === 'na' ? '<em>غير مدعومة</em>' : np === 'denied' ? '<em>محظورة من إعدادات المتصفح</em>' : tgl(np === 'granted', 'v3NotifOn()')) +
@@ -2159,7 +2164,7 @@ function renderSet() {
       row('🌙', 'الوضع الليلي', tgl(dark, 'toggleTheme();setTimeout(renderSet,50)')) +
       row('🌐', 'اللغة', '<em>' + (typeof LANG !== 'undefined' && LANG === 'en' ? 'English' : 'العربية') + ' ›</em>', "setLang(LANG==='en'?'ar':'en')") +
       row('❓', 'دليل الاستخدام', '<em>›</em>', "window.open('help.html','_blank')") +
-    '</div><div class="sbox"><div class="srow out" onclick="logout()">⎋ ' + LX('تسجيل الخروج', 'Sign out') + '</div></div><div class="ver">' + LX('تطبيق المسح الميداني والمهام · الإصدار 3.1', 'Field survey & tasks app · version 3.1') + '</div>';
+    '</div><div class="sbox"><div class="srow out" onclick="logout()">⎋ ' + LX('تسجيل الخروج', 'Sign out') + '</div></div><div class="ver">' + LX('تطبيق المسح الميداني والمهام · الإصدار 3.2', 'Field survey & tasks app · version 3.2') + '</div>';
 }
 function v3NotifOn() { if (!('Notification' in window)) return; if (Notification.permission === 'granted') { toast('لإيقافها: من إعدادات المتصفح ← الإشعارات'); return; }
   Notification.requestPermission().then(function (p) { toast(p === 'granted' ? '✓ ستصلك تنبيهات المهام الجديدة على هذا الهاتف' : 'لم يتم السماح بالتنبيهات'); renderSet(); }); }
